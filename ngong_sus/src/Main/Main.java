@@ -1,4 +1,4 @@
-package ngong_sus;
+package Main;
 
 public class Main {
 
