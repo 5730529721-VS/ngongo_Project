@@ -9,6 +9,10 @@ public class RedBox extends Box {
 		super(lenght);
 		this.setSpeed(speed);
 	}
+	
+	public void move(){
+		minX+=speed;
+	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
@@ -25,13 +29,13 @@ public class RedBox extends Box {
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return false;
+		return isVisible;
 	}
 
 	@Override
 	public boolean isDestroyed() {
 		// TODO Auto-generated method stub
-		return false;
+		return isDestroyed;
 	}
 
 	public int getSpeed() {
