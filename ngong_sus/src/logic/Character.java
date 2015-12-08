@@ -2,30 +2,39 @@ package logic;
 
 import render.IRenderable;
 
-public abstract class Character implements IRenderable{
-	
+public abstract class Character implements IRenderable {
+
 	protected int life;
 	protected int maxLife;
 	protected int minAttack;
 	protected int maxAttack;
 	protected boolean isVisible;
 	protected boolean isDestroyed;
-	protected int z;
+	protected boolean isDead;
+	protected boolean isAttack;
+	protected int x,y,z;
 	
-	
-	public Character(int minAttack, int maxAttack, int maxLife){
+
+	public Character(int minAttack, int maxAttack, int maxLife) {
 		this.minAttack = minAttack;
 		this.maxAttack = maxAttack;
 		this.maxLife = maxLife;
 	}
-	
-	public void decreaseLife(int amount){
-		life-=amount;
-		if(life<=0){
+
+	public void decreaseLife(int amount) {
+		life -= amount;
+		if (life <= 0) {
 			life = 0;
-			isDestroyed = true;
+			isDead=true;
 		}
 	}
+	
+	public void attack(Character c){
+		c.decreaseLife(c.minAttack);
+		isAttack = true;
+	}
+	
+	
 
 	@Override
 	public int getZ() {
@@ -44,6 +53,9 @@ public abstract class Character implements IRenderable{
 		// TODO Auto-generated method stub
 		return isDestroyed;
 	}
-	
-	
+
+	public void setDesTroyed(boolean b) {
+		isDestroyed = b;
+	}
+
 }
