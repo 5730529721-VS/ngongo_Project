@@ -10,6 +10,8 @@ public abstract class Character implements IRenderable{
 	protected int maxAttack;
 	protected boolean isVisible;
 	protected boolean isDestroyed;
+	protected boolean isAttack;
+	protected boolean isDead;
 	protected int z;
 	
 	
@@ -17,6 +19,10 @@ public abstract class Character implements IRenderable{
 		this.minAttack = minAttack;
 		this.maxAttack = maxAttack;
 		this.maxLife = maxLife;
+		this.isDestroyed = false;
+		this.isAttack = false;
+		this.isDead = false;
+		this.isVisible = true;
 	}
 	
 	public void decreaseLife(int amount){

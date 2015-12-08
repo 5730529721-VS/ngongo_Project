@@ -25,10 +25,6 @@ public class MainLogic {
 		
 	}
 	
-	public void start(){
-		
-	}
-	
 	public void generateBox(){
 		double rand = Math.random()*4;
 		if (rand > 0 && rand < 1){
