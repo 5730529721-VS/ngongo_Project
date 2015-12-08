@@ -1,5 +1,7 @@
 package logic;
 
+import render.IRenderable;
+
 public abstract class Character implements IRenderable{
 	
 	protected int life;

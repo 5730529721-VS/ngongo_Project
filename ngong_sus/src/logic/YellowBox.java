@@ -2,14 +2,15 @@ package logic;
 
 import java.awt.Graphics2D;
 
-import render.IRenderable;
+public class YellowBox extends Box {
+	public YellowBox(int lenght){
+		super(lenght);
+	}
 
-public class Bar implements IRenderable{
-	int x;
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -1,18 +1,24 @@
 package logic;
 
+import render.IRenderable;
+import render.RenderableHolder;
+
 public abstract class Box implements IRenderable{
 	int minX;
 	int length;
 	
-	public Box(){
-		
+	public Box(int length){
+		this.length = length;
 	}
 	
 	public boolean isBarOn(){
-		if(MainLogic.instance.bar.x-minX <= length){
+		for(IRenderable r : RenderableHolder.getInstance().getRenderableList()){
+			if (r instanceof Bar){
+				if (((Bar)r).x-minX <= length)
 			return true;
+			}
 		}
-		else return false;
+		return false;
 	}
 	
 	
