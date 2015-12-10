@@ -13,6 +13,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 
 import logic.Knight;
+import logic.RedBox;
 
 public class GameScreen extends JComponent {
 
@@ -57,17 +58,11 @@ public class GameScreen extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setBackground(Color.LIGHT_GRAY);
 		g2.clearRect(0, 0, getWidth(), getHeight());
-		try {
-			g2.drawImage(Resource.knight.getSubimage(25, 50,70,65), 0, 0, null);
-			Thread.sleep(200);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		try {
-			g2.drawImage(Resource.knight.getSubimage(70, 825,60,120), 0, 0, null);
-			Thread.sleep(100);
-		} catch (Exception e) {
-			// TODO: handle exception
+		
+		synchronized (RenderableHolder.getInstance()) {
+			for (IRenderable item : RenderableHolder.getInstance().getRenderableList()){
+					item.draw(g2);
+			}
 		}
 
 	}

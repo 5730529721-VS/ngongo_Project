@@ -4,13 +4,12 @@ import java.awt.Graphics2D;
 import render.Resource;
 
 public class Knight extends Character {
-	
 
 	public Knight(int minAttack, int maxAttack, int maxLife) {
 		// TODO Auto-generated constructor stub
 		super(minAttack, maxAttack, maxLife);
 		life = maxLife;
-		
+
 	}
 
 	@Override
@@ -25,6 +24,13 @@ public class Knight extends Character {
 		g2.drawImage(Resource.knight.getSubimage(280, 825,60,120), 0, 0, null);
 
 		g2.drawImage(Resource.knight.getSubimage(380, 825,60,120), 0, 0, null);
+	}
+
+	public void heal(int amount) {
+		life += amount;
+		if (life > maxLife) {
+			life = maxLife;
+		}
 	}
 
 }

@@ -1,15 +1,18 @@
 package logic;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class GreenBox extends Box {
+	private int x;
 	public GreenBox(int lenght){
 		super(lenght);
 	}
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-
+		g2d.setColor(Color.RED);
+		g2d.fillRect(100, 0, 50, 50);
 	}
 
 	@Override
