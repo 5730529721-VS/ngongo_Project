@@ -12,6 +12,8 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JComponent;
 
+import logic.Knight;
+
 public class GameScreen extends JComponent {
 
 	/**
@@ -23,7 +25,7 @@ public class GameScreen extends JComponent {
 
 	public GameScreen() {
 		super();
-		setPreferredSize(new Dimension(400, 400));
+		setPreferredSize(new Dimension(375, 1000));
 		setVisible(true);
 		this.addKeyListener(new KeyListener() {
 			
@@ -55,6 +57,19 @@ public class GameScreen extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setBackground(Color.LIGHT_GRAY);
 		g2.clearRect(0, 0, getWidth(), getHeight());
+		try {
+			g2.drawImage(Resource.knight.getSubimage(25, 50,70,65), 0, 0, null);
+			Thread.sleep(200);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			g2.drawImage(Resource.knight.getSubimage(70, 825,60,120), 0, 0, null);
+			Thread.sleep(100);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 	
 	
