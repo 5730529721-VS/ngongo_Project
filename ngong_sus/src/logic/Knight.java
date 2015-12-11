@@ -15,15 +15,6 @@ public class Knight extends Character {
 	@Override
 	public void draw(Graphics2D g2) {
 
-		g2.drawImage(Resource.knight.getSubimage(25, 50,70,65), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(70, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(180, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(280, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(380, 825,60,120), 0, 0, null);
 	}
 
 	public void heal(int amount) {

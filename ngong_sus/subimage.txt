@@ -1,7 +1,8 @@
 knight_stand 
 g2.drawImage(GameScreen.image.getSubimage(25, 50,70,65), 280, 55, null);
 g2.drawImage(GameScreen.image.getSubimage(70, 825,60,120), 0, 0, null);
-g2.drawImage(GameScreen.image.getSubimage(180, 825,60,120), 70, 0, null);		g2.drawImage(GameScreen.image.getSubimage(280, 825,60,120), 140, 0, null);
+g2.drawImage(GameScreen.image.getSubimage(180, 825,60,120), 70, 0, null);		
+g2.drawImage(GameScreen.image.getSubimage(280, 825,60,120), 140, 0, null);
 g2.drawImage(GameScreen.image.getSubimage(380, 825,60,120), 210, 0, null);
 
 knight_attack
