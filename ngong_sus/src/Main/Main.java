@@ -2,6 +2,8 @@ package Main;
 
 import input.InputUtility;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 import logic.MainLogic;
@@ -21,7 +23,6 @@ public class Main {
 		frame.getContentPane().add(gameScreen);
 		frame.pack();
 		frame.setVisible(true);
-
 		while (true) {
 			try {
 				Thread.sleep(20);
