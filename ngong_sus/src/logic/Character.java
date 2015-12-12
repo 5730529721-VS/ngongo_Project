@@ -36,7 +36,8 @@ public abstract class Character implements IRenderable {
 	}
 	
 	public void attack(Character c){
-		c.decreaseLife(c.minAttack);
+		/////////////////////////// chage attack
+		c.decreaseLife(50);
 		isAttack = true;
 	}
 	
@@ -44,19 +45,16 @@ public abstract class Character implements IRenderable {
 
 	@Override
 	public int getZ() {
-		// TODO Auto-generated method stub
 		return z;
 	}
 
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
 		return isVisible;
 	}
 
 	@Override
 	public boolean isDestroyed() {
-		// TODO Auto-generated method stub
 		return isDestroyed;
 	}
 

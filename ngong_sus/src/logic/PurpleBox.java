@@ -7,18 +7,18 @@ import render.GameScreen;
 
 public class PurpleBox extends Box {
 	private int y;
-	public PurpleBox(int lenght,int z){
-		super(lenght,z);
-		y=100;
-		minX=(int) (Math.random()*GameScreen.screenWidth);
+
+	public PurpleBox(int lenght, int z) {
+		super(lenght, z);
+		y = 425;
+		minX = (int) (Math.random() * GameScreen.lanewidth)+50;
 	}
 
-	
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		g2d.setColor(Color.MAGENTA);
-		g2d.fillRect(minX, y, length+10, 50);
+		g2d.fillRect(minX, y, length, 50);
 	}
 
 	@Override

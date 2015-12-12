@@ -1,12 +1,12 @@
 package logic;
 
 import java.awt.Graphics2D;
+import render.GameScreen;
 import render.Resource;
 
 public class Knight extends Character {
 
 	public Knight(int minAttack, int maxAttack, int maxLife) {
-		// TODO Auto-generated constructor stub
 		super(minAttack, maxAttack, maxLife);
 		life = maxLife;
 
@@ -14,16 +14,15 @@ public class Knight extends Character {
 
 	@Override
 	public void draw(Graphics2D g2) {
-
-		g2.drawImage(Resource.knight.getSubimage(25, 50,70,65), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(70, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(180, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(280, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(380, 825,60,120), 0, 0, null);
+		if (isAttack){
+			GameScreen.drawknight.drawEnemyAttack(g2);
+			GameScreen.drawknight.updateAnimation();
+		}
+		else if (isDead || isDestroyed){
+			g2.drawImage(Resource.knight.getSubimage(30, 1220, 70, 70), 70, 265, null);
+		}
+		else
+		g2.drawImage(Resource.knight.getSubimage(25, 50,70,65), 70, 265, null);
 	}
 
 	public void heal(int amount) {
