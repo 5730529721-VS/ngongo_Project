@@ -10,14 +10,14 @@ public abstract class Box implements IRenderable {
 	boolean isVisible;
 
 	public Box(int length, int z) {
-		this.length = length;
+		this.length = length + 20;
 		this.z = z;
 	}
 
 	public boolean isBarOn() {
 		for (IRenderable r : RenderableHolder.getInstance().getRenderableList()) {
 			if (r instanceof Bar) {
-				if (((Bar) r).x - minX <= length )
+				if (((Bar) r).getX() - minX <= length && ((Bar) r).getX() >= minX)
 					return true;
 			}
 		}

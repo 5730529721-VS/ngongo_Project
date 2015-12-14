@@ -2,56 +2,56 @@ package logic;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import input.InputUtility;
-import render.GameScreen;
-import render.IRenderable;
 import render.RenderableHolder;
 
 public class MainLogic {
 	public static int boxZ;
+	private static int zBox = 0;
+	public static ArrayList<Box> boxes;
+
 	public int creationDelay;
 	public int creationDelayCounter;
-	private ArrayList<Box> boxes;
+
 	private Knight knight;
 	private Enemy enemy;
 	private Bar bar;
+	private PlayerStatus player;
 	private boolean isPause;
-	private static int zBox=0;
+	private boolean isPurpleOn;
+
+	public static RedBox redbox = new RedBox(3, 25);
+	public static RunnableThread runBox = new RunnableThread(redbox);
+	private Thread runThread = new Thread(runBox);
 
 	public MainLogic() {
 		boxes = new ArrayList<Box>();
-		knight = new Knight(1, 5, 50);
+		knight = new Knight(10, 40, 50);
 		enemy = new Enemy(2, 7, 50);
-		bar = new Bar(0);
+		bar = new Bar(50);
+		player = new PlayerStatus();
 		setPause(false);
+		setPurpleOn(false);
 		creationDelay = 50;
 		creationDelayCounter = 0;
 		RenderableHolder.getInstance().add(bar);
+		RenderableHolder.getInstance().add(enemy);
+		RenderableHolder.getInstance().add(knight);
+		RenderableHolder.getInstance().add(player);
+		RenderableHolder.getInstance().add(redbox);
+		runThread.start();
 	}
 
-	// public void start(){
-	// while(true){
-	// try {
-	// Thread.sleep(20);
-	// } catch (InterruptedException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	//
-	//
-	// }
-	// }
-
 	public void update() {
+
+		// reset attack
+		knight.isAttack = false;
+		enemy.isAttack = false;
+
 		// moving jaa
 		bar.move();
-		for (Box b1 : boxes) {
-			if (b1 instanceof RedBox) {
-				((RedBox) b1).move();
-
-			}
-		}
 
 		// HIT SPACE
 		if (InputUtility.isSpaceTriggered()) {
@@ -64,51 +64,51 @@ public class MainLogic {
 						if (b instanceof GreenBox) {
 							knight.heal(10);
 							b.setDesTroyed(true);
-							System.out.println("yeah");
+							RenderableHolder.getInstance().getRenderableList()
+									.remove(b);
+							boxes.remove(b);
 						} else if (b instanceof YellowBox) {
 
 							knight.attack(enemy);
 							b.setDesTroyed(true);
-							
-						} else if (b instanceof RedBox) {
-							b.setDesTroyed(true);
-							
-						} else if (b instanceof PurpleBox) {
-							b.setDesTroyed(true);
-							
-//							synchronized (b) {
-//								try {
-//									b.wait();
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//							}
-						}
-
-						for (Box b1 : boxes) {
-							if (b1 instanceof RedBox) {
-
-								if (b1.minX >= GameScreen.screenWidth) {
-									b1.setDesTroyed(true);
-									enemy.attack(knight);
+							RenderableHolder.getInstance().getRenderableList()
+									.remove(b);
+							boxes.remove(b);
+				
+							synchronized (redbox) {
+								if (!redbox.isMoving()){
+									redbox.setMoving(true);
+									redbox.notifyAll();
 								}
 							}
-						}
-						break;
-					}
-					for (Box b1 : boxes) {
-						if (b1 instanceof RedBox) {
-
-							if (b1.minX >= GameScreen.screenWidth) {
-								b1.setDesTroyed(true);
-								enemy.attack(knight);
+							// } else if (b instanceof RedBox) {
+							// b.setDesTroyed(true);
+							// RenderableHolder.getInstance().getRenderableList().remove(b);
+							// boxes.remove(b);
+						} else if (b instanceof PurpleBox) {
+							b.setDesTroyed(true);
+							setPurpleOn(false);
+							RenderableHolder.getInstance().getRenderableList()
+									.remove(b);
+							boxes.remove(b);
+							
+							synchronized (redbox) {
+								if (redbox.isMoving())
+									redbox.setMoving(false);
 							}
 						}
+
+						return;
 					}
+
 				}
 			}
+			enemy.attack(knight);
+		}
 
+		if (runBox.getBouncedCount() == 3) {
+			runBox.setBouncedCount(0);
+			enemy.attack(knight);
 		}
 
 		// DELAY
@@ -123,7 +123,6 @@ public class MainLogic {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			knight.isDestroyed = true;
@@ -132,38 +131,47 @@ public class MainLogic {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			enemy.isDestroyed = true;
 		}
-		// GENERATE
+		// GENERATE BOX
 		generateBox();
+
+		// CREATE NEW ENEMY
+		if (enemy.isDestroyed) {
+			enemy = new Enemy(10, 20, 50);
+			RenderableHolder.getInstance().add(enemy);
+			player.addScore(1);
+			runBox.setBouncedCount(0);
+		}
+		
+		//GAME OVER CHANGE TO INTRO
+		if (knight.isDestroyed){
+			JOptionPane.showMessageDialog(null, "It's over little kid", "GAMEOVER", JOptionPane.INFORMATION_MESSAGE);
+			Main.Main.changeScreen(Main.Main.INTRO);
+		}
 
 	}
 
 	public synchronized void generateBox() {
-		double rand = Math.random() * 4;
-		if (rand > 0 && rand < 1) {
-			RedBox r = new RedBox((int) (Math.random() * 2), (int) (Math.random() * 20),zBox);
-			RenderableHolder.getInstance().add(r);
-			boxes.add(r);
-		} else if (rand < 2) {
-			GreenBox g = new GreenBox((int) (Math.random() * 20),zBox);
+		double rand = Math.random() * 10;
+		if (rand > 0 && rand < 2) {
+			GreenBox g = new GreenBox(25, zBox);
 			RenderableHolder.getInstance().add(g);
 			boxes.add(g);
-		} else if (rand < 3) {
-			PurpleBox p = new PurpleBox((int) (Math.random() * 10),zBox);
+		} else if (rand < 3 && !isPurpleOn) {
+			PurpleBox p = new PurpleBox(25, zBox);
 			RenderableHolder.getInstance().add(p);
 			boxes.add(p);
+			setPurpleOn(true);
 		} else {
-			YellowBox y = new YellowBox((int) (Math.random() * 30),zBox);
+			YellowBox y = new YellowBox(25, zBox);
 			RenderableHolder.getInstance().add(y);
 			boxes.add(y);
 		}
-		
+		//UPDATE Z VALUE
 		zBox++;
-		//redbox higher than others  ?
 	}
 
 	public boolean isPause() {
@@ -188,6 +196,18 @@ public class MainLogic {
 
 	public Bar getBar() {
 		return bar;
+	}
+
+	public PlayerStatus getPlayer() {
+		return player;
+	}
+
+	public boolean isPurpleOn() {
+		return isPurpleOn;
+	}
+
+	public void setPurpleOn(boolean isPurpleOn) {
+		this.isPurpleOn = isPurpleOn;
 	}
 
 }
