@@ -3,25 +3,34 @@ package logic;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class RedBox extends Box {
-	private int speed,y;
-	
-	public RedBox(int speed,int lenght,int z){
-		super(lenght,z);
+import render.GameScreen;
+
+public class RedBox extends Box implements IMovable {
+	private int speed, y;
+	private boolean isMoving;
+
+	public RedBox(int speed, int lenght, int z) {
+		super(lenght, z);
 		this.setSpeed(speed);
-		this.minX = -20;
-		this.y = 100;
+		this.minX = GameScreen.laneWidth;
+		y = 425;
+		isMoving = true;
+		if (minX + length > GameScreen.laneWidth + 50) {
+			minX = 50;
+		}
 	}
-	
-	public void move(){
-		minX += speed;
+
+	public void move() {
+		if (isMoving()) {
+			minX -= speed;
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		g2d.setColor(Color.RED);
-		g2d.fillRect(minX, y, length+10, 50);
+		g2d.fillRect(minX, y, length, 50);
 
 	}
 
@@ -51,6 +60,16 @@ public class RedBox extends Box {
 		if (speed < 0)
 			speed = 0;
 		this.speed = speed;
+	}
+
+	@Override
+	public boolean isMoving() {
+		// TODO Auto-generated method stub
+		return isMoving;
+	}
+
+	public void setMoving(boolean isMoving) {
+		this.isMoving = isMoving;
 	}
 
 }

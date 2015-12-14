@@ -15,7 +15,7 @@ public class Bar implements IRenderable{
 	
 	public void move(){
 		this.x+=5*direction;
-		if(x>=GameScreen.screenWidth||x<=0){
+		if(x>=GameScreen.laneWidth+50||x<=50){
 			direction= -direction;;
 		}
 	}
@@ -23,7 +23,7 @@ public class Bar implements IRenderable{
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		g2d.setColor(Color.black);
-		g2d.fillRect(x, 100, 1, 50);
+		g2d.fillRect(x, 425, 1, 50);
 	}
 
 	@Override

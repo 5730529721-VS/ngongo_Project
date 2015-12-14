@@ -19,7 +19,6 @@ public class Main {
 
 		GameScreen gameScreen = new GameScreen();
 		MainLogic logic = new MainLogic();
-		
 
 		frame.getContentPane().add(gameScreen);
 		frame.pack();
@@ -50,11 +49,11 @@ public class Main {
 		while (true) {
 			try {
 				Thread.sleep(20);
-			} catch (InterruptedException e) {}
-				logic.update();
-				gameScreen.repaint();
-				InputUtility.postUpdate();
-				
+			} catch (InterruptedException e) {
+			}
+			logic.update();
+			gameScreen.repaint();
+			InputUtility.postUpdate();
 
 		}
 	}

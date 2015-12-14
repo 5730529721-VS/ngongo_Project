@@ -36,7 +36,7 @@ public abstract class Character implements IRenderable {
 	}
 	
 	public void attack(Character c){
-		c.decreaseLife(c.minAttack);
+		c.decreaseLife(minAttack);
 		isAttack = true;
 	}
 	

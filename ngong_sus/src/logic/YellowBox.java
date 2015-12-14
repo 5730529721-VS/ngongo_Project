@@ -7,17 +7,21 @@ import render.GameScreen;
 
 public class YellowBox extends Box {
 	private int y;
-	public YellowBox(int lenght,int z){
-		super(lenght,z);
-		y=100;
-		minX=(int) (Math.random()*GameScreen.screenWidth);
+
+	public YellowBox(int lenght, int z) {
+		super(lenght, z);
+		y = 425;
+		minX = (int) (Math.random() * GameScreen.laneWidth)+50;
+		if (minX + length > GameScreen.laneWidth + 50) {
+			minX = 50;
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 		g2d.setColor(Color.yellow);
-		g2d.fillRect(minX, y, length+10, 50);
+		g2d.fillRect(minX, y, length, 50);
 	}
 
 	@Override

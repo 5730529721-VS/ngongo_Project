@@ -22,8 +22,8 @@ public class RenderableHolder {
 		Collections.sort(items, new Comparator<IRenderable>() {
 			@Override
 			public int compare(IRenderable o1, IRenderable o2) {
-				if (o1.getZ() > o2.getZ()) return -1;
-				return 1;
+				if (o1.getZ() > o2.getZ()) return 1;
+				return -1;
 			}
 		});
 	}
