@@ -1,36 +1,43 @@
 package logic;
 
 public class RunnableThread implements Runnable {
-	IMovable m;
+	private RedBox r;
+	private int bouncedCount;
 
-	public RunnableThread(IMovable m) {
-
-		this.m = m;
+	public RunnableThread(RedBox r) {
+		super();
+		this.r = r;
+		this.bouncedCount = 0;
 
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while (true) {
 			try {
 				Thread.sleep(20);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			synchronized (m) {
-				m.move();
-				if (!m.isMoving() && m instanceof RedBox){
-					try {
-						((RedBox)m).wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				synchronized (r) {
+					r.move();
+					if (!r.isMoving()) {
+						r.wait();
+					}
+					if (r.isBouncing()){
+						r.flipDirection();
+						bouncedCount++;
 					}
 				}
+			} catch (InterruptedException e) {
 			}
 		}
+	}
+
+	public void setBouncedCount(int bouncedCount) {
+		if (bouncedCount < 0) bouncedCount = 0;
+		this.bouncedCount = bouncedCount;
+	}
+
+	public int getBouncedCount() {
+		return bouncedCount;
 	}
 
 }

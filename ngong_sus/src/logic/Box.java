@@ -17,7 +17,7 @@ public abstract class Box implements IRenderable {
 	public boolean isBarOn() {
 		for (IRenderable r : RenderableHolder.getInstance().getRenderableList()) {
 			if (r instanceof Bar) {
-				if (((Bar) r).x - minX <= length && ((Bar) r).x >= minX)
+				if (((Bar) r).getX() - minX <= length && ((Bar) r).getX() >= minX)
 					return true;
 			}
 		}

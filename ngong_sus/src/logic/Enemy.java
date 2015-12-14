@@ -1,5 +1,6 @@
 package logic;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import render.GameScreen;
@@ -24,6 +25,10 @@ public class Enemy extends Character{
 		else 
 		g2.drawImage(Resource.monster.getSubimage(8, 383,85,85), 330, 250, null);
 		
+		//DRAW STATUS LIFE
+		g2.setColor(Color.RED);
+		g2.fillRect(350, 80, 2*life, 10);
+		g2.drawImage(Resource.heart,300, 65 , 40, 40, null);
 	}
 
 }

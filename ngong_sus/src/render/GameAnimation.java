@@ -16,8 +16,6 @@ public class GameAnimation implements IRenderable{
 		this.frameDelay = frameDelay;
 		this.currentFrame = 0;
 		this.frameDelayCount = frameDelay;
-		this.x = 100;
-		this.y = 100;
 		if (image == null){
 			this.frameHeight = 0;
 			this.frameWidth = 0;
