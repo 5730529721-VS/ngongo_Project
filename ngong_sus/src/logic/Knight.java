@@ -17,6 +17,7 @@ public class Knight extends Character {
 	@Override
 	public void draw(Graphics2D g2) {
 		if (isAttack){
+			Resource.knightEcho.play();
 			GameScreen.drawknight.drawEnemyAttack(g2);
 			GameScreen.drawknight.updateAnimation();
 		}

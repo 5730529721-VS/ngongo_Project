@@ -29,7 +29,7 @@ public class RedBox extends Box implements IMovable {
 	}
 
 	@Override
-	public void draw(Graphics2D g2) {
+	public synchronized void draw(Graphics2D g2) {
 		g2.setColor(new Color(255, 0, 0));
 		g2.fillRect(minX, y, length, 50);
 		g2.drawImage(Resource.skull, minX, y, length, 50, null);

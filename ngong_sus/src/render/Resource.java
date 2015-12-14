@@ -1,5 +1,7 @@
 package render;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -16,6 +18,11 @@ public class Resource {
 	public static BufferedImage shield;
 	public static BufferedImage potion;
 	public static BufferedImage skull;
+	public static BufferedImage background;
+	
+	public static AudioClip introSound;
+	public static AudioClip knightEcho;
+	public static AudioClip monEcho;
 	
 	static{
 		try {
@@ -28,6 +35,11 @@ public class Resource {
 			shield = ImageIO.read(loader.getResource("shield.png"));
 			potion = ImageIO.read(loader.getResource("potion.png"));
 			skull = ImageIO.read(loader.getResource("skull.png"));
+			background = ImageIO.read(loader.getResource("background.png"));
+			
+			introSound = Applet.newAudioClip((loader.getResource("background.wav")).toURI().toURL());
+			knightEcho = Applet.newAudioClip((loader.getResource("knight_echo.wav")).toURI().toURL());
+			monEcho = Applet.newAudioClip((loader.getResource("mon_echo.wav")).toURI().toURL());
 			
 			//Filp the image horizontally
 			AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
@@ -45,7 +57,10 @@ public class Resource {
 			shield = null;
 			potion = null;
 			skull = null;
-
+			background = null;
+			introSound = null;
+			knightEcho = null;
+			monEcho = null;
 		}
 	}
 }

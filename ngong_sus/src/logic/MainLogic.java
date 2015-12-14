@@ -1,16 +1,15 @@
 package logic;
 
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import input.InputUtility;
 import render.RenderableHolder;
+import ui.HighScoreUtility;
 
 public class MainLogic {
 	public static int boxZ;
 	private static int zBox = 0;
 	public static ArrayList<Box> boxes;
+	private static boolean isPause;
 
 	public int creationDelay;
 	public int creationDelayCounter;
@@ -19,7 +18,6 @@ public class MainLogic {
 	private Enemy enemy;
 	private Bar bar;
 	private PlayerStatus player;
-	private boolean isPause;
 	private boolean isPurpleOn;
 
 	public static RedBox redbox = new RedBox(3, 25);
@@ -34,7 +32,7 @@ public class MainLogic {
 		player = new PlayerStatus();
 		setPause(false);
 		setPurpleOn(false);
-		creationDelay = 50;
+		creationDelay = 70;
 		creationDelayCounter = 0;
 		RenderableHolder.getInstance().add(bar);
 		RenderableHolder.getInstance().add(enemy);
@@ -45,113 +43,122 @@ public class MainLogic {
 	}
 
 	public void update() {
+		if (!isPause) {
+//			// PAUSE
+//			if (InputUtility.isEnterTriggered() && !isPause()) {
+//				setPause(true);
+//				System.out.println("pause");
+//			}
+//			if (InputUtility.isEnterTriggered() && isPause()) {
+//				setPause(false);
+//				System.out.println("unpause");
+//			}
 
-		// reset attack
-		knight.isAttack = false;
-		enemy.isAttack = false;
+			// reset attack
+			knight.isAttack = false;
+			enemy.isAttack = false;
 
-		// moving jaa
-		bar.move();
+			// moving bar
+			bar.move();
 
-		// HIT SPACE
-		if (InputUtility.isSpaceTriggered()) {
+			// HIT SPACE
+			if (InputUtility.isSpaceTriggered()) {
 
-			if (boxes.size() != 0) {
+				if (boxes.size() != 0) {
 
-				for (int i = boxes.size() - 1; i >= 0; i--) {
-					Box b = boxes.get(i);
-					if (b.isBarOn()) {
-						if (b instanceof GreenBox) {
-							knight.heal(10);
-							b.setDesTroyed(true);
-							RenderableHolder.getInstance().getRenderableList()
-									.remove(b);
-							boxes.remove(b);
-						} else if (b instanceof YellowBox) {
+					for (int i = boxes.size() - 1; i >= 0; i--) {
+						Box b = boxes.get(i);
+						if (b.isBarOn()) {
+							if (b instanceof GreenBox) {
+								knight.heal(10);
+								b.setDesTroyed(true);
+								RenderableHolder.getInstance()
+										.getRenderableList().remove(b);
+								boxes.remove(b);
+							} else if (b instanceof YellowBox) {
 
-							knight.attack(enemy);
-							b.setDesTroyed(true);
-							RenderableHolder.getInstance().getRenderableList()
-									.remove(b);
-							boxes.remove(b);
-				
-							synchronized (redbox) {
-								if (!redbox.isMoving()){
-									redbox.setMoving(true);
-									redbox.notifyAll();
+								knight.attack(enemy);
+								b.setDesTroyed(true);
+								RenderableHolder.getInstance()
+										.getRenderableList().remove(b);
+								boxes.remove(b);
+
+								synchronized (redbox) {
+									if (!redbox.isMoving()) {
+										redbox.setMoving(true);
+										redbox.notifyAll();
+									}
+								}
+							} else if (b instanceof PurpleBox) {
+								b.setDesTroyed(true);
+								setPurpleOn(false);
+								RenderableHolder.getInstance()
+										.getRenderableList().remove(b);
+								boxes.remove(b);
+
+								synchronized (redbox) {
+									if (redbox.isMoving())
+										redbox.setMoving(false);
 								}
 							}
-							// } else if (b instanceof RedBox) {
-							// b.setDesTroyed(true);
-							// RenderableHolder.getInstance().getRenderableList().remove(b);
-							// boxes.remove(b);
-						} else if (b instanceof PurpleBox) {
-							b.setDesTroyed(true);
-							setPurpleOn(false);
-							RenderableHolder.getInstance().getRenderableList()
-									.remove(b);
-							boxes.remove(b);
-							
-							synchronized (redbox) {
-								if (redbox.isMoving())
-									redbox.setMoving(false);
-							}
+
+							return;
 						}
 
-						return;
 					}
-
 				}
+				enemy.attack(knight);
 			}
-			enemy.attack(knight);
-		}
 
-		if (runBox.getBouncedCount() == 3) {
-			runBox.setBouncedCount(0);
-			enemy.attack(knight);
-		}
-
-		// DELAY
-		if (creationDelayCounter != creationDelay) {
-			creationDelayCounter++;
-			return;
-		}
-		creationDelayCounter = 0;
-
-		// CHECK DEAD
-		if (knight.isDead) {
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if (runBox.getBouncedCount() == 3) {
+				runBox.setBouncedCount(0);
+				enemy.attack(knight);
 			}
-			knight.isDestroyed = true;
-		}
-		if (enemy.isDead) {
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+
+			// DELAY
+			if (creationDelayCounter != creationDelay) {
+				creationDelayCounter++;
+				return;
 			}
-			enemy.isDestroyed = true;
-		}
-		// GENERATE BOX
-		generateBox();
+			creationDelayCounter = 0;
 
-		// CREATE NEW ENEMY
-		if (enemy.isDestroyed) {
-			enemy = new Enemy(10, 20, 50);
-			RenderableHolder.getInstance().add(enemy);
-			player.addScore(1);
-			runBox.setBouncedCount(0);
-		}
-		
-		//GAME OVER CHANGE TO INTRO
-		if (knight.isDestroyed){
-			JOptionPane.showMessageDialog(null, "It's over little kid", "GAMEOVER", JOptionPane.INFORMATION_MESSAGE);
-			Main.Main.changeScreen(Main.Main.INTRO);
-		}
+			// CHECK DEAD
+			if (knight.isDead) {
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				knight.isDestroyed = true;
+			}
+			if (enemy.isDead) {
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				enemy.isDestroyed = true;
+			}
+			// GENERATE BOX
+			generateBox();
 
+			// CREATE NEW ENEMY
+			if (enemy.isDestroyed) {
+				enemy = new Enemy(10, 20, 50);
+				RenderableHolder.getInstance().add(enemy);
+				player.addScore(1);
+				runBox.setBouncedCount(0);
+			}
+
+			// GAME OVER CHANGE TO INTRO
+			if (knight.isDestroyed) {
+				// knight.setDesTroyed(false);
+				// knight.isDead = false;
+				setPause(true);
+				HighScoreUtility.recordHighScore(player.getScore());
+				Main.Main.changeScreen(Main.Main.INTRO);
+			}
+		}
 	}
 
 	public synchronized void generateBox() {
@@ -170,16 +177,8 @@ public class MainLogic {
 			RenderableHolder.getInstance().add(y);
 			boxes.add(y);
 		}
-		//UPDATE Z VALUE
+		// UPDATE Z VALUE
 		zBox++;
-	}
-
-	public boolean isPause() {
-		return isPause;
-	}
-
-	public void setPause(boolean isPause) {
-		this.isPause = isPause;
 	}
 
 	public ArrayList<Box> getBoxes() {
@@ -210,4 +209,11 @@ public class MainLogic {
 		this.isPurpleOn = isPurpleOn;
 	}
 
+	public static boolean isPause() {
+		return isPause;
+	}
+
+	public static void setPause(boolean isPause) {
+		MainLogic.isPause = isPause;
+	}
 }

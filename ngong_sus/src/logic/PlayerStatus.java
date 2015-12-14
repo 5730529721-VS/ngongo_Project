@@ -23,7 +23,7 @@ public class PlayerStatus implements IRenderable{
 	}
 
 	@Override
-	public void draw(Graphics2D g2) {
+	public synchronized void draw(Graphics2D g2) {
 		DrawingUtility.drawStatusbar(g2, getScore(), 0);
 		
 	}

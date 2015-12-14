@@ -1,8 +1,6 @@
 package logic;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-
 import render.GameScreen;
 import render.Resource;
 
@@ -12,13 +10,14 @@ public class YellowBox extends Box {
 	public YellowBox(int lenght, int z) {
 		super(lenght, z);
 		y = GameScreen.laneY;
-		minX = (int) (Math.random() * GameScreen.lanewidth)+40;
+		minX = (int) (Math.random() * GameScreen.lanewidth)+50;
+		if (minX + lenght >= GameScreen.lanewidth + 50){
+			minX = 50;
+		}
 	}
 
 	@Override
 	public synchronized void draw(Graphics2D g2d) {
-//		g2d.setColor(Color.yellow);
-//		g2d.fillRect(minX, y, length, 50);
 		g2d.drawImage(Resource.sword, minX, y, length, 50, null);
 	}
 

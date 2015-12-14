@@ -4,16 +4,14 @@ import input.InputUtility;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import logic.MainLogic;
 import render.GameScreen;
 import render.IntroScreen;
+import render.Resource;
 
 public class Main {
 	private static JComponent currentScreen;
@@ -26,7 +24,6 @@ public class Main {
 	public static final int GAME = 2;
 	
 	public static void main(String[] args) {
-
 		frame = new JFrame("NGONG-sus project");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -36,6 +33,7 @@ public class Main {
 		currentScreen = introScreen;
 		
 		changeScreen(INTRO);
+		
 		frame.setVisible(true);
 		frame.addKeyListener(new KeyListener() {
 
@@ -47,7 +45,9 @@ public class Main {
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_SPACE)
 					InputUtility.setSpacePressed(false);
-
+//				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+//					InputUtility.setEnterPressed(false);
+//				}
 			}
 
 			@Override
@@ -58,35 +58,41 @@ public class Main {
 					}
 					InputUtility.setSpacePressed(true);
 				}
+//				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+//					if (!InputUtility.isEnterPressed()) {
+//						InputUtility.setEnterTriggered(true);
+//					}
+//					InputUtility.setEnterPressed(true);
+//				}
 			}
 		});
-		frame.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Mouse is not needed", "Don't even try", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
+//		frame.addMouseListener(new MouseListener() {
+//			
+//			@Override
+//			public void mouseReleased(MouseEvent e) {
+//				
+//			}
+//			
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				
+//			}
+//			
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				
+//			}
+//			
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				JOptionPane.showMessageDialog(null, "Mouse is not needed", "Don't even try", JOptionPane.INFORMATION_MESSAGE);
+//			}
+//		});
 		while (true) {
 			try {
 				Thread.sleep(20);
@@ -95,23 +101,26 @@ public class Main {
 				logic.update();
 				gameScreen.repaint();
 				InputUtility.postUpdate();
-				
 
 		}
 	}
 	
 	public static void changeScreen(int screen){
+		System.out.println("---------- CHANGE THE SCREEN ------------");
 		frame.remove(currentScreen);
 		switch (screen) {
 		case INTRO:
+			Resource.introSound.play();
 			currentScreen = introScreen;
 			break;
 
 		case GAME:
+			Resource.introSound.stop();
 			currentScreen = gameScreen;
 			break;
 		}
 		frame.add(currentScreen);
 		frame.pack();
+		frame.repaint();
 	}
 }
