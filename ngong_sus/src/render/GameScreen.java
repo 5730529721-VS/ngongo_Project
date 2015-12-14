@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JComponent;
+
 
 
 
@@ -28,7 +28,6 @@ public class GameScreen extends JComponent {
 		super();
 		setPreferredSize(new Dimension(500, 500));
 		setVisible(true);
-		
 	}
 	
 	public synchronized void paintComponent(Graphics g){

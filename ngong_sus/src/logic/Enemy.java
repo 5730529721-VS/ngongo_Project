@@ -16,6 +16,7 @@ public class Enemy extends Character{
 	@Override
 	public void draw(Graphics2D g2) {
 		if (isAttack){
+			Resource.monEcho.play();
 			GameScreen.drawmons.drawEnemyAttack(g2);
 			GameScreen.drawmons.updateAnimation();
 		}

@@ -1,57 +1,46 @@
 package render;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 
-public class IntroScreen extends JComponent{
+import ui.HighScoreUtility;
+
+public class IntroScreen extends JPanel{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton start;
+	private JButton highscore;
 
 	public IntroScreen(){
 		super();
-		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(GameScreen.screenWidth, GameScreen.screenHeight));
+		setLayout(null);
+		setPreferredSize(new Dimension(Resource.background.getWidth(), Resource.background.getHeight()));
 		start = new JButton("StartGame");
-		start.setPreferredSize(new Dimension(50, 50));
-		add(start, BorderLayout.CENTER);
-		setVisible(true);
-		start.addMouseListener(new MouseListener() {
-			
+		start.setBounds(450, 170, 100, 23);
+		highscore = new JButton("HighScore");
+		highscore.setBounds(600, 170, 100, 23);
+		this.add(start);
+		this.add(highscore);
+		this.setVisible(true);
+		highscore.addActionListener(new ActionListener() {
+
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				
+			public void actionPerformed(ActionEvent e) {
+				HighScoreUtility.displayTop10();
 			}
+		});
+		start.addActionListener(new ActionListener() {
 			
 			@Override
-			public void mousePressed(MouseEvent e) {
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				Main.Main.changeScreen(Main.Main.GAME);
-				
 			}
 		});
 	}
@@ -59,7 +48,6 @@ public class IntroScreen extends JComponent{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(Color.RED);
-		g2d.fillRect(0, 0, 500, 500);
+		g2d.drawImage(Resource.background, 0, 0, null);
 	}
 }

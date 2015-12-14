@@ -161,7 +161,7 @@ public class GameAnimation implements IRenderable{
 	}
 
 
-	public void drawEnemyAttack(Graphics2D g2) {
+	public synchronized void drawEnemyAttack(Graphics2D g2) {
 		if (visible && image != null){
 			if (currentFrame <= 2)
 			g2.drawImage(image.getSubimage((currentFrame*100)+95,383 , 85, 85), null, x, y);
@@ -170,7 +170,7 @@ public class GameAnimation implements IRenderable{
 		}
 	}
 
-	public void drawKnightAttack(Graphics2D g2) {
+	public synchronized void drawKnightAttack(Graphics2D g2) {
 		if (visible && image != null){
 			if (currentFrame <= 3)
 			g2.drawImage(image.getSubimage((currentFrame*100)+80,825 , 60, 120), null, x, y);

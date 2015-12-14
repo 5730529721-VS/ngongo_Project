@@ -13,12 +13,13 @@ public class PurpleBox extends Box {
 		super(lenght, z);
 		y = GameScreen.laneY;
 		minX = (int) (Math.random() * GameScreen.lanewidth)+50;
+		if (minX + lenght >= GameScreen.lanewidth + 50){
+			minX = 50;
+		}
 	}
 
 	@Override
 	public synchronized void draw(Graphics2D g2d) {
-//		g2d.setColor(Color.MAGENTA);
-//		g2d.fillRect(minX, y, length, 50);
 		g2d.setColor(new Color(178, 102, 255));
 		g2d.fillRect(minX, y, length, 50);
 		g2d.drawImage(Resource.shield, minX, y, length, 50, null);

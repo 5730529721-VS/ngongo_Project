@@ -13,6 +13,9 @@ public class GreenBox extends Box {
 		super(lenght, z);
 		y = GameScreen.laneY;
 		minX = (int) (Math.random() * GameScreen.lanewidth)+50;
+		if (minX + lenght >= GameScreen.lanewidth + 50){
+			minX = 50;
+		}
 	}
 
 	@Override
