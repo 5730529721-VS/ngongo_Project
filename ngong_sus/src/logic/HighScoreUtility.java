@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import Exception.NullHighScoreException;
+import Exception.WrongHighScoreFormatException;
+
 public class HighScoreUtility {
 	public static class HighScore implements Comparable<HighScore> {
 		public int score;
@@ -20,8 +23,23 @@ public class HighScoreUtility {
 
 		public HighScore(String record) {
 			int index = record.indexOf(":");
+			try {
+			if (index < 0) {
+				
+					throw new WrongHighScoreFormatException();
+				} 
 			name = record.substring(0, index);
 			score = Integer.parseInt(record.substring(index + 1, record.length()));
+			}
+			
+			catch (WrongHighScoreFormatException e) {
+				// TODO Auto-generated catch block
+				e.printText(2);
+				name = "player";
+				score = 0;
+			}
+			
+			
 		}
 
 		@Override
@@ -53,30 +71,55 @@ public class HighScoreUtility {
 
 	private static HighScore[] highScores = null;
 
-	public boolean recordNewHighScore(HighScore newHighScore) {
+	public static void recordNewHighScore(int scoreIn) {
+		try {
+			if (highScores == null) {
+				System.out.println("outRecord");
+				throw new NullHighScoreException();
 
-		if (highScores == null) {
-			createDefaultScore();
-		}
+			}
 
-		for (int i = 0; i < highScores.length; i++) {
-			HighScore h = highScores[i];
-			if (newHighScore.score > h.score) {
-				for (int j = highScores.length - 1; j >= i; j--) {
-					highScores[j] = highScores[j - 1];
+			for (int i = 0; i < highScores.length; i++) {
+
+				HighScore h = highScores[i];
+				if (h == null) {
+
+					throw new NullHighScoreException();
 
 				}
-				highScores[i] = h;
-				recordToText();
-				return true;
-			}
-		}
 
-		return false;
+				if (scoreIn > h.score) {
+					for (int j = highScores.length - 1; j >= i; j--) {
+						highScores[j] = highScores[j - 1];
+
+					}
+					String nameIn = JOptionPane
+							.showInputDialog("Congratulation!!! you are on ranked " + i + "\nEnter your name");
+					try {
+						if (nameIn.indexOf(":") >= 0 || nameIn.equals("")) {
+							throw new WrongHighScoreFormatException();
+						}
+					} catch (WrongHighScoreFormatException e) {
+						// TODO Auto-generated catch block
+						e.printText(1);
+					}
+					highScores[i] = new HighScore(nameIn, scoreIn);
+					recordToText();
+					return;
+					// return true;
+				}
+			}
+		} catch (NullHighScoreException e) {
+			// TODO Auto-generated catch block
+			highScores = e.createDefaultText();
+			recordToText();
+		}
+		JOptionPane.showMessageDialog(null, "did not break any record\nBYE", "GAME OVER!!!", JOptionPane.PLAIN_MESSAGE);
+		// return false;
 
 	}
 
-	public static void recordToText() {
+	private static void recordToText() {
 
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter("highscore"));
@@ -97,33 +140,29 @@ public class HighScoreUtility {
 
 	public static void displayTop10() {
 
-		String msg = "======= Top 10 players =======" + System.getProperty("line.separator");
+		String msg = "<<<<<<< Top 10 knights >>>>>>>" + System.getProperty("line.separator");
 		int rank = 1;
-		if(highScores == null){
-			createDefaultScore();
+		try {
+			if (highScores == null) {
+
+				throw new NullHighScoreException();
+			}
+
+			System.out.println("out10");
+		} catch (NullHighScoreException e) {
+			// TODO Auto-generated catch block
+			highScores = e.createDefaultText();
+			recordToText();
 		}
 		for (HighScore h : highScores) {
-			if(h == null ){
+			if (h == null) {
 				System.out.println("kuy");
 			}
 
-			msg += rank + " " + h.getRecord() + System.getProperty("line.separator");
+			msg += rank + ".) " + h.getRecord() + System.getProperty("line.separator");
 			rank++;
 		}
 		JOptionPane.showMessageDialog(null, msg.trim(), "Top 10", JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	private static void createDefaultScore() {
-		String[] records = HighScore.defaultRecord();
-		highScores = new HighScore[10];
-		for (int i = 0; i < HighScore.defaultRecord().length; i++) {
-			
-			// wrong format
-			highScores[i] = new HighScore(records[i]);
-		}
-		recordToText();
-		
-		
 	}
 
 }

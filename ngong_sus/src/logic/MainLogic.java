@@ -3,7 +3,7 @@ package logic;
 import java.util.ArrayList;
 import input.InputUtility;
 import render.RenderableHolder;
-import ui.HighScoreUtility;
+import logic.HighScoreUtility;
 
 public class MainLogic {
 	public static int boxZ;
@@ -44,15 +44,16 @@ public class MainLogic {
 
 	public void update() {
 		if (!isPause) {
-//			// PAUSE
-//			if (InputUtility.isEnterTriggered() && !isPause()) {
-//				setPause(true);
-//				System.out.println("pause");
-//			}
-//			if (InputUtility.isEnterTriggered() && isPause()) {
-//				setPause(false);
-//				System.out.println("unpause");
-//			}
+			 // PAUSE
+			 if (InputUtility.isEnterTriggered() && !isPause()) {
+			 setPause(true);
+			 
+			 System.out.println("pause");
+			 }
+			 if (InputUtility.isEnterTriggered() && isPause()) {
+			 setPause(false);
+			 System.out.println("unpause");
+			 }
 
 			// reset attack
 			knight.isAttack = false;
@@ -72,15 +73,13 @@ public class MainLogic {
 							if (b instanceof GreenBox) {
 								knight.heal(10);
 								b.setDesTroyed(true);
-								RenderableHolder.getInstance()
-										.getRenderableList().remove(b);
+								RenderableHolder.getInstance().getRenderableList().remove(b);
 								boxes.remove(b);
 							} else if (b instanceof YellowBox) {
 
 								knight.attack(enemy);
 								b.setDesTroyed(true);
-								RenderableHolder.getInstance()
-										.getRenderableList().remove(b);
+								RenderableHolder.getInstance().getRenderableList().remove(b);
 								boxes.remove(b);
 
 								synchronized (redbox) {
@@ -92,8 +91,7 @@ public class MainLogic {
 							} else if (b instanceof PurpleBox) {
 								b.setDesTroyed(true);
 								setPurpleOn(false);
-								RenderableHolder.getInstance()
-										.getRenderableList().remove(b);
+								RenderableHolder.getInstance().getRenderableList().remove(b);
 								boxes.remove(b);
 
 								synchronized (redbox) {
@@ -155,7 +153,7 @@ public class MainLogic {
 				// knight.setDesTroyed(false);
 				// knight.isDead = false;
 				setPause(true);
-				HighScoreUtility.recordHighScore(player.getScore());
+				HighScoreUtility.recordNewHighScore(player.getScore());
 				Main.Main.changeScreen(Main.Main.INTRO);
 			}
 		}

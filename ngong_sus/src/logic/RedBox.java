@@ -12,19 +12,19 @@ public class RedBox extends Box implements IMovable {
 	private boolean isMoving;
 
 	public RedBox(int speed, int lenght) {
-		super(lenght, Integer.MAX_VALUE-1);
+		super(lenght, Integer.MAX_VALUE - 1);
 		setSpeed(speed);
 		minX = GameScreen.lanewidth;
-		y = GameScreen.laneY;
+		y = GameScreen.laneY ;
 		isMoving = true;
 		movingDirection = 1;
-		leftbound = 0;
-		rightbound = 500;
+		leftbound = 50;
+		rightbound = GameScreen.lanewidth+50;
 	}
 
 	public void move() {
 		if (isMoving()) {
-			minX -= (speed*movingDirection);
+			minX -= (speed * movingDirection);
 		}
 	}
 
@@ -71,13 +71,14 @@ public class RedBox extends Box implements IMovable {
 	public void setMoving(boolean isMoving) {
 		this.isMoving = isMoving;
 	}
-	
-	public boolean isBouncing(){
-		if (minX <= leftbound || minX + length >= rightbound) return true;
+
+	public boolean isBouncing() {
+		if (minX <= leftbound || minX + length >= rightbound)
+			return true;
 		return false;
 	}
-	
-	public void flipDirection(){
+
+	public void flipDirection() {
 		this.movingDirection = -movingDirection;
 	}
 

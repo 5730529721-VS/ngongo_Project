@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import logic.MainLogic;
 import render.GameScreen;
@@ -15,7 +16,7 @@ import render.Resource;
 
 public class Main {
 	private static JComponent currentScreen;
-	private static JFrame frame;
+	public static JFrame frame;
 	private static GameScreen gameScreen;
 	private static MainLogic logic;
 	private static IntroScreen introScreen;
@@ -33,6 +34,7 @@ public class Main {
 		currentScreen = introScreen;
 		
 		changeScreen(INTRO);
+		
 		
 		frame.setVisible(true);
 		frame.addKeyListener(new KeyListener() {
@@ -122,5 +124,12 @@ public class Main {
 		frame.add(currentScreen);
 		frame.pack();
 		frame.repaint();
+	}
+	
+	public static void pause(){
+		JLabel pauseLabel = new JLabel("");
+		if(MainLogic.isPause()){
+			
+		}
 	}
 }
