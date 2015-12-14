@@ -47,9 +47,9 @@ public class Main {
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_SPACE)
 					InputUtility.setSpacePressed(false);
-//				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-//					InputUtility.setEnterPressed(false);
-//				}
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					InputUtility.setEnterPressed(false);
+				}
 			}
 
 			@Override
@@ -60,12 +60,12 @@ public class Main {
 					}
 					InputUtility.setSpacePressed(true);
 				}
-//				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-//					if (!InputUtility.isEnterPressed()) {
-//						InputUtility.setEnterTriggered(true);
-//					}
-//					InputUtility.setEnterPressed(true);
-//				}
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (!InputUtility.isEnterPressed()) {
+						InputUtility.setEnterTriggered(true);
+					}
+					InputUtility.setEnterPressed(true);
+				}
 			}
 		});
 //		frame.addMouseListener(new MouseListener() {
@@ -114,11 +114,13 @@ public class Main {
 		case INTRO:
 			Resource.introSound.play();
 			currentScreen = introScreen;
+			MainLogic.endGame();
 			break;
 
 		case GAME:
 			Resource.introSound.stop();
 			currentScreen = gameScreen;
+			MainLogic.startgame();
 			break;
 		}
 		frame.add(currentScreen);
@@ -126,10 +128,17 @@ public class Main {
 		frame.repaint();
 	}
 	
-	public static void pause(){
-		JLabel pauseLabel = new JLabel("");
+	public static void pauseTriggered(){
+		JLabel pauseLabel = new JLabel("pause");
+		pauseLabel.setBounds(GameScreen.screenWidth/2, GameScreen.screenHeight/2, 100, 30);
+		frame.add(pauseLabel);
 		if(MainLogic.isPause()){
-			
+			pauseLabel.setText("");
+		}else{
+			pauseLabel.setText("PAUSE");
 		}
+		frame.validate();
+		//yung mai dai
+		
 	}
 }

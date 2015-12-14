@@ -9,12 +9,12 @@ public class MainLogic {
 	public static int boxZ;
 	private static int zBox = 0;
 	public static ArrayList<Box> boxes;
-	private static boolean isPause;
+	private static boolean isPause, isStart;
 
 	public int creationDelay;
 	public int creationDelayCounter;
 
-	private Knight knight;
+	private static Knight knight;
 	private Enemy enemy;
 	private Bar bar;
 	private PlayerStatus player;
@@ -43,18 +43,20 @@ public class MainLogic {
 	}
 
 	public void update() {
-		if (!isPause) {
-			 // PAUSE
-			 if (InputUtility.isEnterTriggered() && !isPause()) {
-			 setPause(true);
-			 
-			 System.out.println("pause");
-			 }
-			 if (InputUtility.isEnterTriggered() && isPause()) {
-			 setPause(false);
-			 System.out.println("unpause");
-			 }
+		if (!isPause && isStart) {
+			// PAUSE
+			if (InputUtility.isEnterTriggered() && !isPause()) {
+				setPause(true);
+				synchronized (redbox) {
+					if (redbox.isMoving())
+						redbox.setMoving(false);
+				}
+				System.out.println("pause");
+				Main.Main.pauseTriggered();
+				return;
+			}
 
+			
 			// reset attack
 			knight.isAttack = false;
 			enemy.isAttack = false;
@@ -152,9 +154,22 @@ public class MainLogic {
 			if (knight.isDestroyed) {
 				// knight.setDesTroyed(false);
 				// knight.isDead = false;
+				knight = new Knight(10, 40, 50);
+				RenderableHolder.getInstance().add(knight);
 				setPause(true);
 				HighScoreUtility.recordNewHighScore(player.getScore());
 				Main.Main.changeScreen(Main.Main.INTRO);
+			}
+		}
+		if (InputUtility.isEnterTriggered() && isPause()) {
+			setPause(false);
+			Main.Main.pauseTriggered();
+			System.out.println("unpause");
+			synchronized (redbox) {
+				if (!redbox.isMoving()) {
+					redbox.setMoving(true);
+					redbox.notifyAll();
+				}
 			}
 		}
 	}
@@ -177,6 +192,17 @@ public class MainLogic {
 		}
 		// UPDATE Z VALUE
 		zBox++;
+	}
+
+	public static void startgame() {
+		isStart = true;
+		isPause = false;
+	}
+
+	public static void endGame() {
+		
+		isStart = false;
+		isPause = false;
 	}
 
 	public ArrayList<Box> getBoxes() {

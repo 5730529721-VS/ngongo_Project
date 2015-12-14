@@ -1,6 +1,5 @@
 package logic;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,22 +23,21 @@ public class HighScoreUtility {
 		public HighScore(String record) {
 			int index = record.indexOf(":");
 			try {
-			if (index < 0) {
-				
+				if (index < 0) {
+
 					throw new WrongHighScoreFormatException();
-				} 
-			name = record.substring(0, index);
-			score = Integer.parseInt(record.substring(index + 1, record.length()));
+				}
+				name = record.substring(0, index);
+				score = Integer.parseInt(record.substring(index + 1, record.length()));
 			}
-			
+
 			catch (WrongHighScoreFormatException e) {
 				// TODO Auto-generated catch block
 				e.printText(2);
 				name = "player";
 				score = 0;
 			}
-			
-			
+
 		}
 
 		@Override
@@ -78,43 +76,47 @@ public class HighScoreUtility {
 				throw new NullHighScoreException();
 
 			}
-
-			for (int i = 0; i < highScores.length; i++) {
-
-				HighScore h = highScores[i];
-				if (h == null) {
-
-					throw new NullHighScoreException();
-
-				}
-
-				if (scoreIn > h.score) {
-					for (int j = highScores.length - 1; j >= i; j--) {
-						highScores[j] = highScores[j - 1];
-
-					}
-					String nameIn = JOptionPane
-							.showInputDialog("Congratulation!!! you are on ranked " + i + "\nEnter your name");
-					try {
-						if (nameIn.indexOf(":") >= 0 || nameIn.equals("")) {
-							throw new WrongHighScoreFormatException();
-						}
-					} catch (WrongHighScoreFormatException e) {
-						// TODO Auto-generated catch block
-						e.printText(1);
-					}
-					highScores[i] = new HighScore(nameIn, scoreIn);
-					recordToText();
-					return;
-					// return true;
-				}
-			}
 		} catch (NullHighScoreException e) {
 			// TODO Auto-generated catch block
 			highScores = e.createDefaultText();
 			recordToText();
 		}
-		JOptionPane.showMessageDialog(null, "did not break any record\nBYE", "GAME OVER!!!", JOptionPane.PLAIN_MESSAGE);
+
+		for (int i = 0; i < highScores.length; i++) {
+
+			HighScore h = highScores[i];
+			try{
+			if (h == null) {
+				throw new NullHighScoreException();
+			}
+			}catch(NullHighScoreException e){
+				e.createDefaultText();
+			}
+
+			if (scoreIn > h.score) {
+				for (int j = highScores.length - 1; j >= i; j--) {
+					highScores[j] = highScores[j - 1];
+
+				}
+				String nameIn = JOptionPane
+						.showInputDialog("Congratulation!!! you are on ranked " + (i + 1) + "\nEnter your name");
+				try {
+					if (nameIn.indexOf(":") >= 0 || nameIn.equals("")) {
+						throw new WrongHighScoreFormatException();
+					}
+				} catch (WrongHighScoreFormatException e) {
+					// TODO Auto-generated catch block
+					e.printText(1);
+				}
+				highScores[i] = new HighScore(nameIn, scoreIn);
+				recordToText();
+				return;
+				// return true;
+			}
+		}
+
+		JOptionPane.showMessageDialog(null, "You did not break any record. T,T", "GAME OVER!!!", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "BYE");
 		// return false;
 
 	}

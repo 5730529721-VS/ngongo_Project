@@ -4,12 +4,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -34,6 +31,7 @@ public class IntroScreen extends JPanel {
 			public void mouseClicked(MouseEvent e){
 				super.mouseClicked(e);
 				Main.Main.changeScreen(Main.Main.GAME);
+				
 			}
 
 			@Override
