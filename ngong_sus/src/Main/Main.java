@@ -7,20 +7,26 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
+
+import logic.GameTitle;
 import logic.MainLogic;
 import render.GameScreen;
 
 public class Main {
 
 	public static void main(String[] args) {
+		
+		GameScreen gameScreen = new GameScreen();
+		MainLogic logic = new MainLogic();
+		GameTitle title = new GameTitle();
+		
 
 		JFrame frame = new JFrame("NGONG-sus project");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		GameScreen gameScreen = new GameScreen();
-		MainLogic logic = new MainLogic();
-
-		frame.getContentPane().add(gameScreen);
+		
+		frame.getContentPane().add(title);
+		//frame.getContentPane().add(gameScreen);
 		frame.pack();
 		frame.setVisible(true);
 		frame.addKeyListener(new KeyListener() {
@@ -46,15 +52,16 @@ public class Main {
 				}
 			}
 		});
-		while (true) {
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {
-			}
-			logic.update();
-			gameScreen.repaint();
-			InputUtility.postUpdate();
-
-		}
+//		while (true) {
+//			try {
+//				Thread.sleep(20);
+//			} catch (InterruptedException e) {
+//			}
+//			logic.update();
+//			gameScreen.repaint();
+//			InputUtility.postUpdate();
+//
+//		}
+		
 	}
 }
