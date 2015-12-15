@@ -9,7 +9,6 @@ import ui.HighScoreUtility;
 import ui.InputUtility;
 
 public class MainLogic {
-	public static int boxZ;
 	private static int zBox = 0;
 	public static ArrayList<Box> boxes;
 	private static boolean isPause, isStart;
@@ -133,7 +132,7 @@ public class MainLogic {
 
 			// CREATE NEW ENEMY
 			if (enemy.isDestroyed) {
-				enemy = new Enemy(10, 50);
+				enemy = new Enemy(enemy.attack + 1, 50);
 				RenderableHolder.getInstance().add(enemy);
 				player.addScore(1);
 				runBox.setBouncedCount(0);
@@ -183,7 +182,7 @@ public class MainLogic {
 		zBox++;
 	}
 
-	private static void initialize(){
+	private static void initialize() {
 		boxes = new ArrayList<Box>();
 		knight = new Knight(10, 50);
 		enemy = new Enemy(2, 50);
@@ -202,7 +201,7 @@ public class MainLogic {
 		RenderableHolder.getInstance().add(player);
 		RenderableHolder.getInstance().add(redbox);
 	}
-	
+
 	public static void startgame() {
 		isStart = true;
 		isPause = false;

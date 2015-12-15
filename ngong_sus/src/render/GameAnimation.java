@@ -3,34 +3,27 @@ package render;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class GameAnimation implements IRenderable{
+public class GameAnimation implements IRenderable {
 	private BufferedImage image;
-	private int frameCount,frameDelay;
-	private int currentFrame,frameDelayCount;
-	private int x,y,frameWidth,frameHeight;
+	private int frameCount, frameDelay;
+	private int currentFrame, frameDelayCount;
+	private int x, y;
 	private boolean visible = false, playing = false;
-	
-	public GameAnimation(BufferedImage image,int frameCount,int frameDelay){
+
+	public GameAnimation(BufferedImage image, int frameCount, int frameDelay) {
 		this.image = image;
 		this.frameCount = frameCount;
 		this.frameDelay = frameDelay;
 		this.currentFrame = 0;
 		this.frameDelayCount = frameDelay;
-		if (image == null){
-			this.frameHeight = 0;
-			this.frameWidth = 0;
-		}
-		else {
-			this.frameHeight = image.getHeight();
-			this.frameWidth = image.getWidth() / frameCount;
-		}
+
 	}
-	
-	protected void topLeftAnimationAt(int x,int y){
+
+	protected void topLeftAnimationAt(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public BufferedImage getImage() {
 		return image;
 	}
@@ -87,22 +80,6 @@ public class GameAnimation implements IRenderable{
 		this.y = y;
 	}
 
-	public int getFrameWidth() {
-		return frameWidth;
-	}
-
-	public void setFrameWidth(int frameWidth) {
-		this.frameWidth = frameWidth;
-	}
-
-	public int getFrameHeight() {
-		return frameHeight;
-	}
-
-	public void setFrameHeight(int frameHeight) {
-		this.frameHeight = frameHeight;
-	}
-
 	public boolean isPlaying() {
 		return playing;
 	}
@@ -115,36 +92,36 @@ public class GameAnimation implements IRenderable{
 		this.visible = visible;
 	}
 
-	public void AnimationAt(int x,int y){
+	public void AnimationAt(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
-	public void play(){
+
+	public void play() {
 		currentFrame = 0;
 		playing = true;
 		visible = true;
 	}
-	
-	public void stop(){
+
+	public void stop() {
 		currentFrame = 0;
 		playing = false;
 		visible = false;
 	}
-	
-	public void updateAnimation(){
-		if (playing){
-			if (frameDelayCount > 0){
+
+	public void updateAnimation() {
+		if (playing) {
+			if (frameDelayCount > 0) {
 				frameDelayCount--;
 				return;
 			}
-				frameDelayCount = frameDelay;
-				currentFrame++;
+			frameDelayCount = frameDelay;
+			currentFrame++;
 			if (currentFrame == frameCount)
 				stop();
 		}
 	}
-	
+
 	@Override
 	public boolean isVisible() {
 		return visible;
@@ -152,7 +129,7 @@ public class GameAnimation implements IRenderable{
 
 	@Override
 	public int getZ() {
-		return 0; 
+		return 0;
 	}
 
 	@Override
@@ -160,28 +137,27 @@ public class GameAnimation implements IRenderable{
 		return false;
 	}
 
-
 	public synchronized void drawEnemyAttack(Graphics2D g2) {
-		if (visible && image != null){
+		if (visible && image != null) {
 			if (currentFrame <= 2)
-			g2.drawImage(image.getSubimage((currentFrame*100)+95,383 , 85, 85), null, x, y);
+				g2.drawImage(image.getSubimage((currentFrame * 100) + 95, 383, 85, 85), null, x, y);
 			else
-			g2.drawImage(image.getSubimage(((5-currentFrame)*100)+95,383 , 85, 85), null, x, y);
+				g2.drawImage(image.getSubimage(((5 - currentFrame) * 100) + 95, 383, 85, 85), null, x, y);
 		}
 	}
 
 	public synchronized void drawKnightAttack(Graphics2D g2) {
-		if (visible && image != null){
+		if (visible && image != null) {
 			if (currentFrame <= 3)
-			g2.drawImage(image.getSubimage((currentFrame*100)+80,825 , 60, 120), null, x, y);
+				g2.drawImage(image.getSubimage((currentFrame * 100) + 80, 825, 60, 120), null, x, y);
 			else
-			g2.drawImage(image.getSubimage(((7-currentFrame)*100)+80,825 , 60, 120), null, x, y);
+				g2.drawImage(image.getSubimage(((7 - currentFrame) * 100) + 80, 825, 60, 120), null, x, y);
 		}
 	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
-		
+
 	}
 
 }
