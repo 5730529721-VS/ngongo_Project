@@ -2,8 +2,6 @@ package logic;
 
 import java.util.ArrayList;
 
-import javax.annotation.Resource;
-
 import Main.Main;
 import render.GameScreen;
 import render.RenderableHolder;
