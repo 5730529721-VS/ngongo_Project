@@ -37,4 +37,12 @@ public class RenderableHolder {
 		return items;
 	}
 
+<<<<<<< HEAD
+=======
+	public void clear() {
+		// TODO Auto-generated method stub
+		items = new ArrayList<IRenderable>();
+	}
+
+>>>>>>> refs/remotes/origin/master
 }

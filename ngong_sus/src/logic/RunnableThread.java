@@ -20,6 +20,10 @@ public class RunnableThread implements Runnable {
 					r.move();
 					if (!r.isMoving()) {
 						r.wait();
+<<<<<<< HEAD
+=======
+						System.out.println("wait");
+>>>>>>> refs/remotes/origin/master
 					}
 					if (r.isBouncing()){
 						r.flipDirection();

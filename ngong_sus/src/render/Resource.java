@@ -8,7 +8,11 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+<<<<<<< HEAD
 public class Resource {
+=======
+public class Resource {
+>>>>>>> refs/remotes/origin/master
 
 	public static BufferedImage knight;
 	public static BufferedImage monster;
@@ -19,6 +23,7 @@ public class Resource {
 	public static BufferedImage potion;
 	public static BufferedImage skull;
 	public static BufferedImage background;
+<<<<<<< HEAD
 	
 	public static BufferedImage gamename;
 	
@@ -27,6 +32,17 @@ public class Resource {
 	public static AudioClip monEcho;
 	
 	static{
+=======
+
+	public static BufferedImage gamename;
+
+	public static AudioClip introSound;
+	public static AudioClip knightEcho;
+	public static AudioClip monEcho;
+	public static AudioClip pauseSound;
+
+	static {
+>>>>>>> refs/remotes/origin/master
 		try {
 			ClassLoader loader = RenderableHolder.class.getClassLoader();
 			knight = ImageIO.read(loader.getResource("mon_knight.png"));
@@ -38,6 +54,7 @@ public class Resource {
 			potion = ImageIO.read(loader.getResource("potion.png"));
 			skull = ImageIO.read(loader.getResource("skull.png"));
 			background = ImageIO.read(loader.getResource("background.png"));
+<<<<<<< HEAD
 			
 			gamename= ImageIO.read(loader.getResource("game_name.png"));
 			
@@ -51,8 +68,28 @@ public class Resource {
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 			knight = op.filter(knight, null);
 			
+=======
+
+			gamename = ImageIO.read(loader.getResource("game_name.png"));
+
+			introSound = Applet.newAudioClip((loader.getResource("background.wav")).toURI().toURL());
+			knightEcho = Applet.newAudioClip((loader.getResource("knight_echo.wav")).toURI().toURL());
+			monEcho = Applet.newAudioClip((loader.getResource("mon_echo.wav")).toURI().toURL());
+			pauseSound = Applet.newAudioClip((loader.getResource("pause.wav")).toURI().toURL());
+
+			// Filp the image horizontally
+			AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+			tx.translate(-knight.getWidth(null), 0);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+			knight = op.filter(knight, null);
+
+>>>>>>> refs/remotes/origin/master
 		} catch (Exception e) {
+<<<<<<< HEAD
 			System.out.println("kuy");
+=======
+			
+>>>>>>> refs/remotes/origin/master
 			knight = null;
 			monster = null;
 			heart = null;
@@ -64,7 +101,12 @@ public class Resource {
 			background = null;
 			introSound = null;
 			knightEcho = null;
+<<<<<<< HEAD
 			monEcho = null;
+=======
+			monEcho = null;
+			pauseSound = null;
+>>>>>>> refs/remotes/origin/master
 		}
 	}
 }

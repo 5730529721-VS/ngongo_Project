@@ -4,7 +4,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
 import javax.swing.JComponent;
+<<<<<<< HEAD
+=======
+
+import ui.DrawingUtility;
+>>>>>>> refs/remotes/origin/master
 
 public class GameScreen extends JComponent {
 

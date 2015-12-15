@@ -32,7 +32,11 @@ public abstract class Character implements IRenderable {
 	}
 
 	public void attack(Character c) {
+<<<<<<< HEAD
 		/////////////////////////// chage attack
+=======
+		// ///////////////////////// chage attack
+>>>>>>> refs/remotes/origin/master
 		c.decreaseLife(attack);
 		isAttack = true;
 	}

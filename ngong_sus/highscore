@@ -7,4 +7,8 @@ burgerking:444
 mc:333
 father:222
 BKung:1
+<<<<<<< HEAD
  a:1
+=======
+you:0
+>>>>>>> refs/remotes/origin/master

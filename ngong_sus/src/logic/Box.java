@@ -4,10 +4,10 @@ import render.IRenderable;
 import render.RenderableHolder;
 
 public abstract class Box implements IRenderable {
-	int minX, z;
-	int length;
-	boolean isDestroyed;
-	boolean isVisible;
+	protected int minX, z;
+	protected int length;
+	protected boolean isDestroyed;
+	protected boolean isVisible;
 
 	public Box(int length, int z) {
 		this.length = length + 20;
@@ -24,9 +24,19 @@ public abstract class Box implements IRenderable {
 		return false;
 	}
 
+<<<<<<< HEAD
 	public void setDestroyed(boolean b) {
 		isDestroyed = b;
 
+=======
+	public boolean isDestroyed() {
+		return isDestroyed;
+>>>>>>> refs/remotes/origin/master
 	}
+
+	public void setDestroyed(boolean isDestroyed) {
+		this.isDestroyed = isDestroyed;
+	}
+	
 
 }

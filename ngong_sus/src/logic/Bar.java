@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import render.GameScreen;
-import render.IRenderable;
 
+<<<<<<< HEAD
 public class Bar implements IRenderable{
+=======
+public class Bar implements IMovable{
+>>>>>>> refs/remotes/origin/master
 	private int x,direction,y;
 	
 	public Bar(int x){
@@ -45,5 +48,13 @@ public class Bar implements IRenderable{
 	public int getX() {
 		return x;
 	}
+<<<<<<< HEAD
+=======
+
+	@Override
+	public boolean isMoving() {
+		return true;
+	}
+>>>>>>> refs/remotes/origin/master
 
 }

@@ -3,9 +3,15 @@ package logic;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+<<<<<<< HEAD
 import render.DrawingUtility;
 import render.GameScreen;
 import render.Resource;
+=======
+import render.GameScreen;
+import render.Resource;
+import ui.DrawingUtility;
+>>>>>>> refs/remotes/origin/master
 
 public class RedBox extends Box implements IMovable {
 	private int speed, y, movingDirection, leftbound, rightbound;
