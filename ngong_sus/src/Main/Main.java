@@ -1,7 +1,5 @@
 package Main;
 
-import input.InputUtility;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,19 +10,20 @@ import logic.MainLogic;
 import render.GameScreen;
 import render.IntroScreen;
 import render.Resource;
+import ui.InputUtility;
 
 public class Main {
-	private static JComponent currentScreen;
-	private static JFrame frame;
-	private static GameScreen gameScreen;
-	private static MainLogic logic;
-	private static IntroScreen introScreen;
+	public static JComponent currentScreen;
+	public static JFrame frame;
+	public static GameScreen gameScreen;
+	public static MainLogic logic;
+	public static IntroScreen introScreen;
 	
 	public static final int INTRO = 1;
 	public static final int GAME = 2;
 	
 	public static void main(String[] args) {
-		frame = new JFrame("NGONG-sus project");
+		frame = new JFrame("raid-the-boxes");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		gameScreen = new GameScreen();
@@ -33,6 +32,7 @@ public class Main {
 		currentScreen = introScreen;
 		
 		changeScreen(INTRO);
+		
 		
 		frame.setVisible(true);
 		frame.addKeyListener(new KeyListener() {
@@ -45,9 +45,9 @@ public class Main {
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_SPACE)
 					InputUtility.setSpacePressed(false);
-//				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-//					InputUtility.setEnterPressed(false);
-//				}
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					InputUtility.setEnterPressed(false);
+				}
 			}
 
 			@Override
@@ -58,12 +58,12 @@ public class Main {
 					}
 					InputUtility.setSpacePressed(true);
 				}
-//				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-//					if (!InputUtility.isEnterPressed()) {
-//						InputUtility.setEnterTriggered(true);
-//					}
-//					InputUtility.setEnterPressed(true);
-//				}
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (!InputUtility.isEnterPressed()) {
+						InputUtility.setEnterTriggered(true);
+					}
+					InputUtility.setEnterPressed(true);
+				}
 			}
 		});
 //		frame.addMouseListener(new MouseListener() {
@@ -112,15 +112,20 @@ public class Main {
 		case INTRO:
 			Resource.introSound.play();
 			currentScreen = introScreen;
+			MainLogic.endGame();
 			break;
 
 		case GAME:
 			Resource.introSound.stop();
 			currentScreen = gameScreen;
+			MainLogic.startgame();
+			
 			break;
 		}
 		frame.add(currentScreen);
 		frame.pack();
 		frame.repaint();
 	}
+	
+	
 }

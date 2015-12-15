@@ -3,28 +3,28 @@ package logic;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import render.DrawingUtility;
 import render.GameScreen;
 import render.Resource;
+import ui.DrawingUtility;
 
 public class RedBox extends Box implements IMovable {
 	private int speed, y, movingDirection, leftbound, rightbound;
 	private boolean isMoving;
 
 	public RedBox(int speed, int lenght) {
-		super(lenght, Integer.MAX_VALUE-1);
+		super(lenght, Integer.MAX_VALUE - 1);
 		setSpeed(speed);
 		minX = GameScreen.lanewidth;
 		y = GameScreen.laneY;
 		isMoving = true;
 		movingDirection = 1;
-		leftbound = 0;
-		rightbound = 500;
+		leftbound = 50;
+		rightbound = GameScreen.lanewidth + 50;
 	}
 
 	public void move() {
 		if (isMoving()) {
-			minX -= (speed*movingDirection);
+			minX -= (speed * movingDirection);
 		}
 	}
 
@@ -71,13 +71,14 @@ public class RedBox extends Box implements IMovable {
 	public void setMoving(boolean isMoving) {
 		this.isMoving = isMoving;
 	}
-	
-	public boolean isBouncing(){
-		if (minX <= leftbound || minX + length >= rightbound) return true;
+
+	public boolean isBouncing() {
+		if (minX <= leftbound || minX + length >= rightbound)
+			return true;
 		return false;
 	}
-	
-	public void flipDirection(){
+
+	public void flipDirection() {
 		this.movingDirection = -movingDirection;
 	}
 

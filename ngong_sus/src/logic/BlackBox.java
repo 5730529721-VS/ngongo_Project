@@ -4,14 +4,14 @@ import java.awt.Graphics2D;
 import render.GameScreen;
 import render.Resource;
 
-public class YellowBox extends Box {
+public class BlackBox extends Box {
 	private int y;
 
-	public YellowBox(int lenght, int z) {
+	public BlackBox(int lenght, int z) {
 		super(lenght, z);
 		y = GameScreen.laneY;
-		minX = (int) (Math.random() * GameScreen.lanewidth)+50;
-		if (minX + lenght >= GameScreen.lanewidth + 50){
+		minX = (int) (Math.random() * GameScreen.lanewidth) + 50;
+		if (minX + lenght >= GameScreen.lanewidth + 50) {
 			minX = 50;
 		}
 	}

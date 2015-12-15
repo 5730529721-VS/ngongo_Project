@@ -115,7 +115,7 @@ public class GameAnimation implements IRenderable{
 		this.visible = visible;
 	}
 
-	protected void AnimationAt(int x,int y){
+	public void AnimationAt(int x,int y){
 		this.x = x;
 		this.y = y;
 	}

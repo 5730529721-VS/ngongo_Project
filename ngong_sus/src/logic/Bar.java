@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import render.GameScreen;
-import render.IRenderable;
 
-public class Bar implements IRenderable{
+public class Bar implements IMovable{
 	private int x,direction,y;
 	
 	public Bar(int x){
@@ -23,7 +22,7 @@ public class Bar implements IRenderable{
 	}
 	@Override
 	public synchronized void draw(Graphics2D g2d) {
-		g2d.setColor(Color.black);
+		g2d.setColor(Color.BLACK);
 		g2d.fillRect(x, y, 1, 50);
 	}
 
@@ -44,6 +43,11 @@ public class Bar implements IRenderable{
 	
 	public int getX() {
 		return x;
+	}
+
+	@Override
+	public boolean isMoving() {
+		return true;
 	}
 
 }

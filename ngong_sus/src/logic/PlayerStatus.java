@@ -2,8 +2,8 @@ package logic;
 
 import java.awt.Graphics2D;
 
-import render.DrawingUtility;
 import render.IRenderable;
+import ui.DrawingUtility;
 
 public class PlayerStatus implements IRenderable{
 	
@@ -24,7 +24,7 @@ public class PlayerStatus implements IRenderable{
 
 	@Override
 	public synchronized void draw(Graphics2D g2) {
-		DrawingUtility.drawStatusbar(g2, getScore(), 0);
+		DrawingUtility.drawStatusbar(g2, getScore());
 		
 	}
 
@@ -40,7 +40,6 @@ public class PlayerStatus implements IRenderable{
 
 	@Override
 	public boolean isDestroyed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

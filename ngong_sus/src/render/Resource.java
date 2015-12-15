@@ -20,6 +20,8 @@ public class Resource {
 	public static BufferedImage skull;
 	public static BufferedImage background;
 	
+	public static BufferedImage gamename;
+	
 	public static AudioClip introSound;
 	public static AudioClip knightEcho;
 	public static AudioClip monEcho;
@@ -36,6 +38,8 @@ public class Resource {
 			potion = ImageIO.read(loader.getResource("potion.png"));
 			skull = ImageIO.read(loader.getResource("skull.png"));
 			background = ImageIO.read(loader.getResource("background.png"));
+			
+			gamename= ImageIO.read(loader.getResource("game_name.png"));
 			
 			introSound = Applet.newAudioClip((loader.getResource("background.wav")).toURI().toURL());
 			knightEcho = Applet.newAudioClip((loader.getResource("knight_echo.wav")).toURI().toURL());
