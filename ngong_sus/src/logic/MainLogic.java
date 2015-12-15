@@ -2,6 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 import input.InputUtility;
+import render.GameScreen;
 import render.RenderableHolder;
 import logic.HighScoreUtility;
 
@@ -22,12 +23,12 @@ public class MainLogic {
 
 	public static RedBox redbox = new RedBox(3, 25);
 	public static RunnableThread runBox = new RunnableThread(redbox);
-	private Thread runThread = new Thread(runBox);
+	private static Thread runThread = new Thread(runBox);
 
 	public MainLogic() {
 		boxes = new ArrayList<Box>();
-		knight = new Knight(10, 40, 50);
-		enemy = new Enemy(2, 7, 50);
+		knight = new Knight(10, 50);
+		enemy = new Enemy(2, 50);
 		bar = new Bar(50);
 		player = new PlayerStatus();
 		setPause(false);
@@ -39,7 +40,7 @@ public class MainLogic {
 		RenderableHolder.getInstance().add(knight);
 		RenderableHolder.getInstance().add(player);
 		RenderableHolder.getInstance().add(redbox);
-		runThread.start();
+
 	}
 
 	public void update() {
@@ -52,11 +53,10 @@ public class MainLogic {
 						redbox.setMoving(false);
 				}
 				System.out.println("pause");
-				Main.Main.pauseTriggered();
+				GameScreen.isPause = true;
 				return;
 			}
 
-			
 			// reset attack
 			knight.isAttack = false;
 			enemy.isAttack = false;
@@ -77,7 +77,7 @@ public class MainLogic {
 								b.setDesTroyed(true);
 								RenderableHolder.getInstance().getRenderableList().remove(b);
 								boxes.remove(b);
-							} else if (b instanceof YellowBox) {
+							} else if (b instanceof BlackBox) {
 
 								knight.attack(enemy);
 								b.setDesTroyed(true);
@@ -144,7 +144,7 @@ public class MainLogic {
 
 			// CREATE NEW ENEMY
 			if (enemy.isDestroyed) {
-				enemy = new Enemy(10, 20, 50);
+				enemy = new Enemy(10, 50);
 				RenderableHolder.getInstance().add(enemy);
 				player.addScore(1);
 				runBox.setBouncedCount(0);
@@ -154,7 +154,7 @@ public class MainLogic {
 			if (knight.isDestroyed) {
 				// knight.setDesTroyed(false);
 				// knight.isDead = false;
-				knight = new Knight(10, 40, 50);
+				knight = new Knight(10, 50);
 				RenderableHolder.getInstance().add(knight);
 				setPause(true);
 				HighScoreUtility.recordNewHighScore(player.getScore());
@@ -163,7 +163,7 @@ public class MainLogic {
 		}
 		if (InputUtility.isEnterTriggered() && isPause()) {
 			setPause(false);
-			Main.Main.pauseTriggered();
+			GameScreen.isPause = false;
 			System.out.println("unpause");
 			synchronized (redbox) {
 				if (!redbox.isMoving()) {
@@ -186,7 +186,7 @@ public class MainLogic {
 			boxes.add(p);
 			setPurpleOn(true);
 		} else {
-			YellowBox y = new YellowBox(25, zBox);
+			BlackBox y = new BlackBox(25, zBox);
 			RenderableHolder.getInstance().add(y);
 			boxes.add(y);
 		}
@@ -197,10 +197,11 @@ public class MainLogic {
 	public static void startgame() {
 		isStart = true;
 		isPause = false;
+		runThread.start();
 	}
 
 	public static void endGame() {
-		
+
 		isStart = false;
 		isPause = false;
 	}

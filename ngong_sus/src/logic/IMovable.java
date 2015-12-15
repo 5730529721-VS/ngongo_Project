@@ -1,6 +1,8 @@
 package logic;
 
-public interface IMovable {
+import render.IRenderable;
+
+public interface IMovable extends IRenderable{
 	boolean isMoving();
 	void move();
 	

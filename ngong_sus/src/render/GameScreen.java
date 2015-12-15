@@ -19,6 +19,7 @@ public class GameScreen extends JComponent {
 	public static final int screenHeight = 500;
 	public static final int lanewidth = 400, laneHeight = 10;
 	public static final int laneY = 405;
+	public static boolean isPause;
 
 	public GameScreen() {
 		super();
@@ -42,5 +43,6 @@ public class GameScreen extends JComponent {
 				}
 			}
 		}
+		
 	}
 }

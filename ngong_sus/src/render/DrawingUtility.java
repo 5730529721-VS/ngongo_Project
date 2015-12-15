@@ -13,7 +13,7 @@ public class DrawingUtility {
 		g2.fillRect(0, 0, 500, 50);
 		g2.setFont(scorefont);
 		g2.setColor(Color.white);
-		g2.drawString("SCORE : " + score, 5, 40);
+		g2.drawString("LEVEL : " + score, 5, 40);
 	}
 	
 	public static GameAnimation createAnimation(BufferedImage image,int x, int y, int frameCount, int frameDelay){

@@ -121,6 +121,7 @@ public class Main {
 			Resource.introSound.stop();
 			currentScreen = gameScreen;
 			MainLogic.startgame();
+			
 			break;
 		}
 		frame.add(currentScreen);
@@ -128,17 +129,5 @@ public class Main {
 		frame.repaint();
 	}
 	
-	public static void pauseTriggered(){
-		JLabel pauseLabel = new JLabel("pause");
-		pauseLabel.setBounds(GameScreen.screenWidth/2, GameScreen.screenHeight/2, 100, 30);
-		frame.add(pauseLabel);
-		if(MainLogic.isPause()){
-			pauseLabel.setText("");
-		}else{
-			pauseLabel.setText("PAUSE");
-		}
-		frame.validate();
-		//yung mai dai
-		
-	}
+	
 }

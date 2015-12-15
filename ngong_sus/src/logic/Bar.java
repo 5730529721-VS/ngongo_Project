@@ -23,7 +23,7 @@ public class Bar implements IRenderable{
 	}
 	@Override
 	public synchronized void draw(Graphics2D g2d) {
-		g2d.setColor(Color.black);
+		g2d.setColor(Color.BLACK);
 		g2d.fillRect(x, y, 1, 50);
 	}
 

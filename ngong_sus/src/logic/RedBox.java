@@ -15,11 +15,11 @@ public class RedBox extends Box implements IMovable {
 		super(lenght, Integer.MAX_VALUE - 1);
 		setSpeed(speed);
 		minX = GameScreen.lanewidth;
-		y = GameScreen.laneY ;
+		y = GameScreen.laneY;
 		isMoving = true;
 		movingDirection = 1;
 		leftbound = 50;
-		rightbound = GameScreen.lanewidth+50;
+		rightbound = GameScreen.lanewidth + 50;
 	}
 
 	public void move() {
