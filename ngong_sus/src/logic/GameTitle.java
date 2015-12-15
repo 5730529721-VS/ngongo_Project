@@ -5,13 +5,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import render.GameScreen;
+import ui.HighScoreUtility;
 
 
 public class GameTitle extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean isOn;
 	
 	public GameTitle(){

@@ -4,51 +4,52 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import render.GameScreen;
+import render.Resource;
+import ui.DrawingUtility;
 
 public class RedBox extends Box implements IMovable {
-	private int speed, y;
+	private int speed, y, movingDirection, leftbound, rightbound;
 	private boolean isMoving;
 
-	public RedBox(int speed, int lenght, int z) {
-		super(lenght, z);
-		this.setSpeed(speed);
-		this.minX = GameScreen.laneWidth;
-		y = 425;
+	public RedBox(int speed, int lenght) {
+		super(lenght, Integer.MAX_VALUE - 1);
+		setSpeed(speed);
+		minX = GameScreen.lanewidth;
+		y = GameScreen.laneY;
 		isMoving = true;
-		if (minX + length > GameScreen.laneWidth + 50) {
-			minX = 50;
-		}
+		movingDirection = 1;
+		leftbound = 50;
+		rightbound = GameScreen.lanewidth + 50;
 	}
 
 	public void move() {
 		if (isMoving()) {
-			minX -= speed;
+			minX -= (speed * movingDirection);
 		}
 	}
 
 	@Override
-	public void draw(Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		g2d.setColor(Color.RED);
-		g2d.fillRect(minX, y, length, 50);
-
+	public synchronized void draw(Graphics2D g2) {
+		g2.setColor(new Color(255, 0, 0));
+		g2.fillRect(minX, y, length, 50);
+		g2.drawImage(Resource.skull, minX, y, length, 50, null);
+		g2.setColor(new Color(0, 51, 102));
+		g2.setFont(DrawingUtility.scorefont);
+		g2.drawString("Bounced " + MainLogic.runBox.getBouncedCount(), 200, 380);
 	}
 
 	@Override
 	public int getZ() {
-		// TODO Auto-generated method stub
 		return z;
 	}
 
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
 		return isVisible;
 	}
 
 	@Override
 	public boolean isDestroyed() {
-		// TODO Auto-generated method stub
 		return isDestroyed;
 	}
 
@@ -64,12 +65,21 @@ public class RedBox extends Box implements IMovable {
 
 	@Override
 	public boolean isMoving() {
-		// TODO Auto-generated method stub
 		return isMoving;
 	}
 
 	public void setMoving(boolean isMoving) {
 		this.isMoving = isMoving;
+	}
+
+	public boolean isBouncing() {
+		if (minX <= leftbound || minX + length >= rightbound)
+			return true;
+		return false;
+	}
+
+	public void flipDirection() {
+		this.movingDirection = -movingDirection;
 	}
 
 }

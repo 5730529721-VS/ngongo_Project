@@ -1,29 +1,36 @@
 package logic;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+
+import render.GameScreen;
 import render.Resource;
 
 public class Knight extends Character {
 
-	public Knight(int minAttack, int maxAttack, int maxLife) {
-		// TODO Auto-generated constructor stub
-		super(minAttack, maxAttack, maxLife);
+	public Knight(int attack, int maxLife) {
+		super(attack, maxLife);
 		life = maxLife;
 
 	}
 
 	@Override
 	public void draw(Graphics2D g2) {
+		if (isAttack) {
+			Resource.knightEcho.play();
+			GameScreen.drawknight.drawEnemyAttack(g2);
+			GameScreen.drawknight.updateAnimation();
+		} else if (isDead || isDestroyed) {
+			g2.drawImage(Resource.knight.getSubimage(30, 1220, 70, 70), 70, 265, null);
+		} else
+			g2.drawImage(Resource.knight.getSubimage(25, 50, 70, 65), 70, 265, null);
 
-		g2.drawImage(Resource.knight.getSubimage(25, 50,70,65), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(70, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(180, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(280, 825,60,120), 0, 0, null);
-
-		g2.drawImage(Resource.knight.getSubimage(380, 825,60,120), 0, 0, null);
+		// DRAW STATUS LIFE
+		g2.setColor(Color.black);
+		g2.drawString(life + "/" + maxLife, 75, 70);
+		g2.setColor(Color.RED);
+		g2.fillRect(75, 80, 2 * life, 10);
+		g2.drawImage(Resource.heart, 20, 65, 40, 40, null);
 	}
 
 	public void heal(int amount) {

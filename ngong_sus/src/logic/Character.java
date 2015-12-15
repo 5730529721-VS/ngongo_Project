@@ -6,20 +6,16 @@ public abstract class Character implements IRenderable {
 
 	protected int life;
 	protected int maxLife;
-	protected int minAttack;
-	protected int maxAttack;
+	protected int attack;
 	protected boolean isVisible;
 	protected boolean isDestroyed;
 
 	protected boolean isDead;
 	protected boolean isAttack;
-	protected int x,y,z;
+	protected int x, y, z;
 
-	
-
-	public Character(int minAttack, int maxAttack, int maxLife) {
-		this.minAttack = minAttack;
-		this.maxAttack = maxAttack;
+	public Character(int attack, int maxLife) {
+		this.attack = attack;
 		this.maxLife = maxLife;
 		this.isDestroyed = false;
 		this.isAttack = false;
@@ -31,32 +27,28 @@ public abstract class Character implements IRenderable {
 		life -= amount;
 		if (life <= 0) {
 			life = 0;
-			isDead=true;
+			isDead = true;
 		}
 	}
-	
-	public void attack(Character c){
-		c.decreaseLife(minAttack);
+
+	public void attack(Character c) {
+		// ///////////////////////// chage attack
+		c.decreaseLife(attack);
 		isAttack = true;
 	}
-	
-	
 
 	@Override
 	public int getZ() {
-		// TODO Auto-generated method stub
 		return z;
 	}
 
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
 		return isVisible;
 	}
 
 	@Override
 	public boolean isDestroyed() {
-		// TODO Auto-generated method stub
 		return isDestroyed;
 	}
 

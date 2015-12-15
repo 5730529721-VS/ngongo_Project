@@ -1,0 +1,29 @@
+knight_stand 
+g2.drawImage(GameScreen.image.getSubimage(25, 50,70,65), 280, 55, null);
+g2.drawImage(GameScreen.image.getSubimage(70, 825,60,120), 0, 0, null);
+g2.drawImage(GameScreen.image.getSubimage(180, 825,60,120), 70, 0, null);		
+g2.drawImage(GameScreen.image.getSubimage(280, 825,60,120), 140, 0, null);
+g2.drawImage(GameScreen.image.getSubimage(380, 825,60,120), 210, 0, null);
+
+knight_attack
+(70, 825,375,120)
+attack1
+(70, 825,60,120)
+attack2
+(180, 825,60,120)
+attack3
+(280, 825,60,120)
+attack4
+(380, 825,60,120)
+
+
+DRAC_attack & stand
+(8, 383,372,400)
+stand
+(8, 383,85,85)
+attack1
+(93, 383,85,80)
+attack2
+(195, 383,85,80)
+attack3
+(299, 383,85,80)

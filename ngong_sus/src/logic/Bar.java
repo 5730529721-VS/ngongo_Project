@@ -4,44 +4,50 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import render.GameScreen;
-import render.IRenderable;
 
-public class Bar implements IRenderable{
-	int x,direction;
+public class Bar implements IMovable{
+	private int x,direction,y;
+	
 	public Bar(int x){
 		this.x=x;
+		y = GameScreen.laneY;
 		direction=1;
 	}
 	
 	public void move(){
 		this.x+=5*direction;
-		if(x>=GameScreen.laneWidth+50||x<=50){
+		if(x>=GameScreen.lanewidth+50||x<=50){
 			direction= -direction;;
 		}
 	}
 	@Override
-	public void draw(Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		g2d.setColor(Color.black);
-		g2d.fillRect(x, 425, 1, 50);
+	public synchronized void draw(Graphics2D g2d) {
+		g2d.setColor(Color.BLACK);
+		g2d.fillRect(x, y, 1, 50);
 	}
 
 	@Override
 	public int getZ() {
-		// TODO Auto-generated method stub
 		return Integer.MAX_VALUE;
 	}
 
 	@Override
 	public boolean isVisible() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isDestroyed() {
-		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public boolean isMoving() {
+		return true;
 	}
 
 }
