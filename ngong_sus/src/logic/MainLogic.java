@@ -1,6 +1,9 @@
 package logic;
 
 import java.util.ArrayList;
+
+import javax.naming.InitialContext;
+
 import input.InputUtility;
 import render.GameScreen;
 import render.RenderableHolder;
@@ -12,34 +15,25 @@ public class MainLogic {
 	public static ArrayList<Box> boxes;
 	private static boolean isPause, isStart;
 
-	public int creationDelay;
-	public int creationDelayCounter;
+	public static int creationDelay;
+	public static int creationDelayCounter;
+	public int enemyAttackDelay = 6;
+	public int enemyAttackDelayCounter = 0;
+	public int knightAttackDelay = 8;
+	public int knightAttackDelayCounter = 0;
 
 	private static Knight knight;
-	private Enemy enemy;
-	private Bar bar;
-	private PlayerStatus player;
-	private boolean isPurpleOn;
+	private static Enemy enemy;
+	private static Bar bar;
+	private static PlayerStatus player;
+	private static boolean isPurpleOn;
 
 	public static RedBox redbox = new RedBox(3, 25);
 	public static RunnableThread runBox = new RunnableThread(redbox);
 	private static Thread runThread = new Thread(runBox);
 
 	public MainLogic() {
-		boxes = new ArrayList<Box>();
-		knight = new Knight(10, 50);
-		enemy = new Enemy(2, 50);
-		bar = new Bar(50);
-		player = new PlayerStatus();
-		setPause(false);
-		setPurpleOn(false);
-		creationDelay = 70;
-		creationDelayCounter = 0;
-		RenderableHolder.getInstance().add(bar);
-		RenderableHolder.getInstance().add(enemy);
-		RenderableHolder.getInstance().add(knight);
-		RenderableHolder.getInstance().add(player);
-		RenderableHolder.getInstance().add(redbox);
+		initialize();
 
 	}
 
@@ -58,8 +52,22 @@ public class MainLogic {
 			}
 
 			// reset attack
-			knight.isAttack = false;
-			enemy.isAttack = false;
+//			if (enemy.isAttack){
+//				if (enemyAttackDelayCounter != enemyAttackDelay){
+//					enemyAttackDelayCounter++;
+//					return;
+//				}
+//				enemy.isAttack = false;
+//				enemyAttackDelayCounter = 0;
+//			}
+//			if (enemy.isAttack){
+//				if (AttackDelayCounter != enemyAttackDelay){
+////					knightAttackDelayCounter++;
+////					return;
+////				}
+////				knight.isAttack = false;
+////				knightAttackDelayCounter = 0;
+////			}
 
 			// moving bar
 			bar.move();
@@ -74,13 +82,13 @@ public class MainLogic {
 						if (b.isBarOn()) {
 							if (b instanceof GreenBox) {
 								knight.heal(10);
-								b.setDesTroyed(true);
+								b.setDestroyed(true);
 								RenderableHolder.getInstance().getRenderableList().remove(b);
 								boxes.remove(b);
 							} else if (b instanceof BlackBox) {
 
 								knight.attack(enemy);
-								b.setDesTroyed(true);
+								b.setDestroyed(true);
 								RenderableHolder.getInstance().getRenderableList().remove(b);
 								boxes.remove(b);
 
@@ -91,7 +99,7 @@ public class MainLogic {
 									}
 								}
 							} else if (b instanceof PurpleBox) {
-								b.setDesTroyed(true);
+								b.setDestroyed(true);
 								setPurpleOn(false);
 								RenderableHolder.getInstance().getRenderableList().remove(b);
 								boxes.remove(b);
@@ -193,10 +201,28 @@ public class MainLogic {
 		// UPDATE Z VALUE
 		zBox++;
 	}
-
+	
+	private static void initialize(){
+		boxes = new ArrayList<Box>();
+		knight = new Knight(10, 50);
+		enemy = new Enemy(2, 50);
+		bar = new Bar(50);
+		player = new PlayerStatus();
+		setPause(false);
+		setPurpleOn(false);
+		creationDelay = 70;
+		creationDelayCounter = 0;
+		RenderableHolder.getInstance().add(bar);
+		RenderableHolder.getInstance().add(enemy);
+		RenderableHolder.getInstance().add(knight);
+		RenderableHolder.getInstance().add(player);
+		RenderableHolder.getInstance().add(redbox);
+	}
+	
 	public static void startgame() {
 		isStart = true;
 		isPause = false;
+		initialize();
 		runThread.start();
 	}
 
@@ -204,6 +230,8 @@ public class MainLogic {
 
 		isStart = false;
 		isPause = false;
+		redbox.setDestroyed(true);
+		RenderableHolder.getInstance().clear();
 	}
 
 	public ArrayList<Box> getBoxes() {
@@ -230,8 +258,8 @@ public class MainLogic {
 		return isPurpleOn;
 	}
 
-	public void setPurpleOn(boolean isPurpleOn) {
-		this.isPurpleOn = isPurpleOn;
+	public static void setPurpleOn(boolean isPurpleOn) {
+		MainLogic.isPurpleOn = isPurpleOn;
 	}
 
 	public static boolean isPause() {

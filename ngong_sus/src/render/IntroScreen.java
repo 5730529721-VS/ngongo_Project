@@ -36,14 +36,12 @@ public class IntroScreen extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				super.mouseEntered(e);
 				start.setFont(new Font("Verdana", Font.BOLD, 40));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				super.mouseExited(e);
 				start.setFont(new Font("Verdana", Font.PLAIN, 30));
 			}
@@ -60,14 +58,12 @@ public class IntroScreen extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				super.mouseEntered(e);
 				highscore.setFont(new Font("Verdana", Font.BOLD, 40));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				super.mouseExited(e);
 				highscore.setFont(new Font("Verdana", Font.PLAIN, 30));
 			}
@@ -86,6 +82,8 @@ public class IntroScreen extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(Resource.background, 0, 0, null);
 		g2d.drawImage(Resource.gamename, 250, 20, null);
+		GameScreen.drawknight.drawKnightAttack(g2d);
+		GameScreen.drawknight.updateAnimation();
 
 	}
 }

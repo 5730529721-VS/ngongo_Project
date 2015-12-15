@@ -13,7 +13,7 @@ public class RunnableThread implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (!r.isDestroyed) {
 			try {
 				Thread.sleep(20);
 				synchronized (r) {

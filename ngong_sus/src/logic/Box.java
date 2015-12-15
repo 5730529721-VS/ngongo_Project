@@ -24,7 +24,7 @@ public abstract class Box implements IRenderable {
 		return false;
 	}
 
-	public void setDesTroyed(boolean b) {
+	public void setDestroyed(boolean b) {
 		isDestroyed = b;
 
 	}

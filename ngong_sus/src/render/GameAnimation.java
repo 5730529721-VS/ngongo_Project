@@ -22,7 +22,7 @@ public class GameAnimation implements IRenderable{
 		}
 		else {
 			this.frameHeight = image.getHeight();
-			this.frameWidth = image.getWidth() / frameCount;
+			this.frameWidth = image.getWidth();
 		}
 	}
 	

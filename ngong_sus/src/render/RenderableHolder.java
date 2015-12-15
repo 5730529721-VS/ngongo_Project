@@ -29,6 +29,10 @@ public class RenderableHolder {
 		});
 	}
 
+	public void clear() {
+		items = new ArrayList<IRenderable>();
+	}
+
 	public ArrayList<IRenderable> getRenderableList() {
 		return items;
 	}
