@@ -13,13 +13,14 @@ public class RunnableThread implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (!r.isDestroyed) {
 			try {
 				Thread.sleep(20);
 				synchronized (r) {
 					r.move();
 					if (!r.isMoving()) {
 						r.wait();
+						System.out.println("wait");
 					}
 					if (r.isBouncing()){
 						r.flipDirection();

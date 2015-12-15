@@ -2,6 +2,8 @@ package logic;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+
 import Main.Main;
 import render.GameScreen;
 import render.RenderableHolder;
@@ -14,35 +16,21 @@ public class MainLogic {
 	public static ArrayList<Box> boxes;
 	private static boolean isPause, isStart;
 
-	public int creationDelay;
-	public int creationDelayCounter;
+	public static int creationDelay;
+	public static int creationDelayCounter;
 
-	private Knight knight;
-	private Enemy enemy;
-	private Bar bar;
-	private PlayerStatus player;
-	private boolean isPurpleOn;
+	private static Knight knight;
+	private static Enemy enemy;
+	private static Bar bar;
+	private static PlayerStatus player;
+	private static boolean isPurpleOn;
 
 	public static RedBox redbox = new RedBox(3, 45);
 	public static RunnableThread runBox = new RunnableThread(redbox);
 	private static Thread runThread = new Thread(runBox);
 
 	public MainLogic() {
-		boxes = new ArrayList<Box>();
-		knight = new Knight(10, 50);
-		enemy = new Enemy(2, 50);
-		bar = new Bar(50);
-		player = new PlayerStatus();
-		setPause(false);
-		setPurpleOn(false);
-		creationDelay = 70;
-		creationDelayCounter = 0;
-		RenderableHolder.getInstance().add(bar);
-		RenderableHolder.getInstance().add(enemy);
-		RenderableHolder.getInstance().add(knight);
-		RenderableHolder.getInstance().add(player);
-		RenderableHolder.getInstance().add(redbox);
-		runThread.start();
+		initialize();
 	}
 
 	public void update() {
@@ -56,6 +44,7 @@ public class MainLogic {
 				}
 				System.out.println("pause");
 				GameScreen.isPause = true;
+				render.Resource.pauseSound.play();
 				return;
 			}
 
@@ -196,15 +185,39 @@ public class MainLogic {
 		zBox++;
 	}
 
+	private static void initialize(){
+		boxes = new ArrayList<Box>();
+		knight = new Knight(10, 50);
+		enemy = new Enemy(2, 50);
+		bar = new Bar(50);
+		player = new PlayerStatus();
+		setPause(false);
+		setPurpleOn(false);
+		creationDelay = 70;
+		creationDelayCounter = 0;
+		redbox = new RedBox(3, 45);
+		runBox = new RunnableThread(redbox);
+		runThread = new Thread(runBox);
+		RenderableHolder.getInstance().add(bar);
+		RenderableHolder.getInstance().add(enemy);
+		RenderableHolder.getInstance().add(knight);
+		RenderableHolder.getInstance().add(player);
+		RenderableHolder.getInstance().add(redbox);
+	}
+	
 	public static void startgame() {
 		isStart = true;
 		isPause = false;
-	
+		initialize();
+		runThread.start();
 	}
 
 	public static void endGame() {
+
 		isStart = false;
 		isPause = false;
+		redbox.setDestroyed(true);
+		RenderableHolder.getInstance().clear();
 	}
 
 	public ArrayList<Box> getBoxes() {
@@ -231,8 +244,8 @@ public class MainLogic {
 		return isPurpleOn;
 	}
 
-	public void setPurpleOn(boolean isPurpleOn) {
-		this.isPurpleOn = isPurpleOn;
+	public static void setPurpleOn(boolean isPurpleOn) {
+		MainLogic.isPurpleOn = isPurpleOn;
 	}
 
 	public static boolean isPause() {

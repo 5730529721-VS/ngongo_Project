@@ -33,4 +33,9 @@ public class RenderableHolder {
 		return items;
 	}
 
+	public void clear() {
+		// TODO Auto-generated method stub
+		items = new ArrayList<IRenderable>();
+	}
+
 }
